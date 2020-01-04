@@ -8,9 +8,8 @@ include("includes/inc_head.php");
 <BODY>
 <div class="body">
 <div id="main">
-<?php
-include("includes/inc_main.php");
-?>
+<a href="login.php">login</a>
+<a href="register.php">registratie</a>
 </div>
 <div id="footer">
 <?php

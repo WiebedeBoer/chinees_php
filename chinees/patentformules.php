@@ -16,28 +16,39 @@ if (isset($_GET["id"])){
 	if (filter_var($_GET["id"], FILTER_VALIDATE_INT)){
 	$num = $_GET["id"];
 //update
-if(isset($_POST[""]) && isset($_POST[""]) && isset($_POST[""]) && isset($_POST[""])) {
-	$new_ = $_POST[""];
-	$upquery = "UPDATE  SET  =?, =? WHERE ID = ?";
+if(isset($_POST["nederlands"]) && isset($_POST["engels"]) && isset($_POST["pinjin"]) && isset($_POST["werking"]) && isset($_POST["tong"]) && isset($_POST["pols"]) && isset($_POST["contraindicaties"]) && isset($_POST["indicaties"])) {
+	$new_nederlands = $_POST["nederlands"];
+	$new_engels = $_POST["engels"];
+	$new_pijin = $_POST["pinjin"];
+	$new_werking = $_POST["werking"];
+	$new_tong = $_POST["tong"];
+	$new_pols = $_POST["pols"];
+	$new_contraindicaties = $_POST["contraindicaties"];
+	$new_indicaties = $_POST["indicaties"];
+	$upquery = "UPDATE Patentformules SET Nederlands =?, Engels =?, Pinjin =?, Werking =?, Tong =?, Pols =?, Contraindicaties =?, Indicaties =? WHERE ID =?";
 	$upid = $conn->prepare($upquery);
-	$upid->bind_param('ssi', $new_, $new_, $num);
+	$upid->bind_param('ssssssssi', $new_nederlands, $new_engels, $new_pijin, $new_werking, $new_tong, $new_pols, $new_contraindicaties, $new_indicaties, $num);
 	$upid->execute();
 	$upid->close();
 }
 //fetch
 else {
-	$wquery = "SELECT , , , ,  FROM  WHERE ID = ?";
+	$wquery = "SELECT Nederlands, Engels, Pinjin, Werking, Tong, Pols, Contraindicaties, Indicaties FROM Patentformules WHERE ID = ?";
 	$wid = $conn->prepare($wquery);
 	$wid->bind_param('i', $num);
 	$wid->execute();
-	$wid->bind_result($, $, $, $, $);
+	$wid->bind_result($nederlands, $engels, $pinjin, $werking, $tong, $pols, $contraindicaties, $indicaties);
 	$wid->fetch();
 	$wid->close();
 	echo '<form method="POST" action="patentformules.php?id='.$num.'"><div class="invul">
-	<div class="inl">: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'..'</TEXTAREA></WRAP></div>
-	<div class="inl">: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'..'</TEXTAREA></WRAP></div>
-	<div class="inl">: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'..'</TEXTAREA></WRAP></div>
-	<div class="inl">: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'..'</TEXTAREA></WRAP></div>
+	<div class="inl">Nederlands: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$nederlands.'</TEXTAREA></WRAP></div>
+	<div class="inl">Engels: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$engels.'</TEXTAREA></WRAP></div>
+	<div class="inl">Pinjin: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$pinjin.'</TEXTAREA></WRAP></div>
+	<div class="inl">Werking: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$werking.'</TEXTAREA></WRAP></div>
+	<div class="inl">Tong: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$tong.'</TEXTAREA></WRAP></div>
+	<div class="inl">Pols: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$pols.'</TEXTAREA></WRAP></div>
+	<div class="inl">Contraindicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$contraindicaties.'</TEXTAREA></WRAP></div>
+	<div class="inl">Indicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$indicaties.'</TEXTAREA></WRAP></div>
 	</div></form>';
 	
 }
@@ -45,10 +56,18 @@ else {
 }
 else {
 //insert
-if (isset($_POST[""]) && isset($_POST[""]) && isset($_POST[""]) && isset($_POST[""])) {
-	    $iquery = "INSERT INTO  (, , ) VALUES (?, ?, ?)";
+if(isset($_POST["nederlands"]) && isset($_POST["engels"]) && isset($_POST["pinjin"]) && isset($_POST["werking"]) && isset($_POST["tong"]) && isset($_POST["pols"]) && isset($_POST["contraindicaties"]) && isset($_POST["indicaties"])) {
+	$new_nederlands = $_POST["nederlands"];
+	$new_engels = $_POST["engels"];
+	$new_pijin = $_POST["pinjin"];
+	$new_werking = $_POST["werking"];
+	$new_tong = $_POST["tong"];
+	$new_pols = $_POST["pols"];
+	$new_contraindicaties = $_POST["contraindicaties"];
+	$new_indicaties = $_POST["indicaties"];	    
+		$iquery = "INSERT INTO Patentformules (Nederlands, Engels, Pinjin, Werking, Tong, Pols, Contraindicaties, Indicaties) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $iid = $conn->prepare($iquery);
-        $iid->bind_param('sss', $rawtitle, $datum, $modtext);
+        $iid->bind_param('ssssssss', $new_nederlands, $new_engels, $new_pijin, $new_werking, $new_tong, $new_pols, $new_contraindicaties, $new_indicaties);
         $iid->execute();
         $iid->close();
 }
@@ -56,10 +75,14 @@ if (isset($_POST[""]) && isset($_POST[""]) && isset($_POST[""]) && isset($_POST[
 else {
 	echo '<form method="POST" action="patentformules.php">
 <div class="invul">
-<div class="inl">: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
-<div class="inl">: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
-<div class="inl">: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
-<div class="inl">: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
+<div class="inl">Nederlands: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
+<div class="inl">Engels: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
+<div class="inl">Pinjin: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
+<div class="inl">Werking: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
+<div class="inl">Tong: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
+<div class="inl">Pols: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
+<div class="inl">Contraindicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
+<div class="inl">Indicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
 </div>
 </form>';
 }		

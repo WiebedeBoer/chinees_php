@@ -18,7 +18,7 @@ if ($conn->connect_error) {
 echo '<!DOCTYPE HTML>
 <HTML>
 <HEAD>';
-include("head.php");
+include("includes/inc_head.php");
 echo '</HEAD>
 <BODY>
 <H1>Portal</H1>';
@@ -149,7 +149,7 @@ if ($Allowlogin ==1){
 echo '<!DOCTYPE HTML>
 <HTML>
 <HEAD>';
-include("head.php");
+include("includes/inc_head.php");
 echo '</HEAD>
 <BODY>
 <H1>Portal</H1>';
@@ -161,7 +161,7 @@ elseif ($Allowlogin ==2){
 echo '<!DOCTYPE HTML>
 <HTML>
 <HEAD>';
-include("head.php");
+include("includes/inc_head.php");
 echo '</HEAD>
 <BODY>
 <H1>Portal</H1>';
@@ -173,7 +173,7 @@ elseif ($Allowlogin ==3){
 echo '<!DOCTYPE HTML>
 <HTML>
 <HEAD>';
-include("head.php");
+include("includes/inc_head.php");
 echo '</HEAD>
 <BODY>
 <H1>Portal</H1>';
@@ -185,7 +185,7 @@ elseif ($Allowlogin ==4){
 echo '<!DOCTYPE HTML>
 <HTML>
 <HEAD>';
-include("head.php");
+include("includes/inc_head.php");
 echo '</HEAD>
 <BODY>
 <H1>Portal</H1>';
@@ -197,7 +197,7 @@ elseif ($Allowlogin ==5){
 echo '<!DOCTYPE HTML>
 <HTML>
 <HEAD>';
-include("head.php");
+include("includes/inc_head.php");
 echo '</HEAD>
 <BODY>
 <H1>Portal</H1>';
@@ -209,7 +209,7 @@ elseif ($Allowlogin ==6){
 echo '<!DOCTYPE HTML>
 <HTML>
 <HEAD>';
-include("head.php");
+include("includes/inc_head.php");
 echo '</HEAD>
 <BODY>
 <H1>Portal</H1>';
@@ -221,7 +221,7 @@ elseif ($Allowlogin ==7){
 echo '<!DOCTYPE HTML>
 <HTML>
 <HEAD>';
-include("head.php");
+include("includes/inc_head.php");
 echo '</HEAD>
 <BODY>
 <H1>Portal</H1>';
@@ -233,7 +233,7 @@ elseif ($Allowlogin ==8){
 echo '<!DOCTYPE HTML>
 <HTML>
 <HEAD>';
-include("head.php");
+include("includes/inc_head.php");
 echo '</HEAD>
 <BODY>
 <H1>Portal</H1>';
@@ -245,7 +245,7 @@ elseif ($Allowlogin ==9){
 echo '<!DOCTYPE HTML>
 <HTML>
 <HEAD>';
-include("head.php");
+include("includes/inc_head.php");
 echo '</HEAD>
 <BODY>
 <H1>Portal</H1>';
@@ -257,7 +257,7 @@ elseif ($Allowlogin ==10){
 echo '<!DOCTYPE HTML>
 <HTML>
 <HEAD>';
-include("head.php");
+include("includes/inc_head.php");
 echo '</HEAD>
 <BODY>
 <H1>Portal</H1>';
@@ -269,7 +269,7 @@ elseif ($Allowlogin ==11){
 echo '<!DOCTYPE HTML>
 <HTML>
 <HEAD>';
-include("head.php");
+include("includes/inc_head.php");
 echo '</HEAD>
 <BODY>
 <H1>Portal</H1>';
@@ -281,7 +281,7 @@ else {
 echo '<!DOCTYPE HTML>
 <HTML>
 <HEAD>';
-include("head.php");
+include("includes/inc_head.php");
 echo '</HEAD>
 <BODY>
 <H1>Portal</H1>';

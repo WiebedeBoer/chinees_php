@@ -37,6 +37,8 @@ echo '<div class="mn"><form method="post" action="overzicht.php"><inout type="te
 </select>
 <input type="submit" value="zoek" name="but">
 </form></div>';
+
+echo '<div class="mn"><a href="logout.php">Logout</a></div>';
 	
 }
 ?>

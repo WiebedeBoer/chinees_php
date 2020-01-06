@@ -43,7 +43,7 @@ else {
 	</div></form>';
 	
 }
-	}		
+			
 }
 else {
 //insert

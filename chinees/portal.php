@@ -10,34 +10,11 @@ if (filter_var($_POST["password"], FILTER_SANITIZE_STRING)){
 $username = $_POST["username"];
 $password = md5($_POST["password"]);
 //DATABASE CONNECTION VARIABLES
-include("../includes/connect.php");
-// Create connection
-$conn = new mysqli($myserver, $myname, $mypassword, $mydb);
+include("connect.php");
+
 // Check connection
-if ($conn->connect_error) {
-echo '<!DOCTYPE HTML>
-<HTML>
-<HEAD>';
-include("includes/inc_head.php");
-echo '</HEAD>
-<BODY>
-<H1>Portal</H1>';
-die("Connection failed: " . $conn->connect_error);
-echo "<P class='error'>Could not connect</P>";
-  }
-else {
-	/*
-//bruteforce protection
-$brutequery = "SELECT tries FROM Brute WHERE User = ? AND DATE_ADD(block_time, INTERVAL 30 MINUTE) >= NOW()";
-$brute = $conn->prepare($brutequery);
-$brute->bind_param('s', $username);
-$brute->execute();
-$brute->bind_result($tries);
-$brute->fetch();
-$brute->close();
-// blockeer inloggen als gebruiker 5x heeft geprobeert in te loggen.
-if ($tries < 5){
-	*/
+if ($connected ==1){
+
 //COUNT USER
 $cquery = "SELECT COUNT(*) AS usercheck, ID, Password, Cokey FROM Users WHERE Username = ?";
 $cid = $conn->prepare($cquery);
@@ -86,73 +63,37 @@ $uid->close();
 $Allowlogin = 11;
 }
 else {
-	/*
-    //Brutecheck
-    $cbquery = "SELECT COUNT(*) AS usernamecount FROM Brute WHERE User = ?";
-    $cbch = $conn->prepare($cbquery);
-    $cbch->bind_param('s', $username);
-    $cbch->bind_result($usernamecount);
-    $cbch->execute();
-    $cbch->fetch();
-    $cbch->close();
-    if($usernamecount ==0){
-        $bquery = "INSERT INTO Brute (User, block_time) VALUES (?, NOW())";
-        $bch = $conn->prepare($bquery);
-        $bch->bind_param('s', $username);
-        $bch->execute();
-        $bch->close();
-    }else {
-            //als laatste foute login later is dan die daarvoor word de tries counter ge-reset.
-            $buquery = "UPDATE Brute SET tries=tries+1, block_time=NOW()  WHERE User = ? AND DATE_ADD(block_time, INTERVAL 30 MINUTE) >= NOW()";
-            $buch = $conn->prepare($buquery);
-            $buch->bind_param('s', $username);
-            $buch->execute();
-            $buch->close();
-            $buuuery = "UPDATE Brute SET tries = 1, block_time=NOW() WHERE User = ? AND DATE_ADD(block_time, INTERVAL 30 MINUTE) < NOW()";
-            $buu = $conn->prepare($buuuery);
-            $buu->bind_param('s', $username);
-            $buu->execute();
-            $buu->close();
-			*/
-        }
 $Allowlogin = 10;
 }
+
+
 }
 else {
 $Allowlogin = 9;
 }
 
-/*
-}
-else {
-$Allowlogin = 2;
-}
-*/
 
-/*
 }
-*/
-}
-}
-else {
-$Allowlogin = 8;
-}
+//con
+
 }
 else {
-$Allowlogin = 7;
-}
-}
-else {
-$Allowlogin = 6;
-}
+$Allowlogin = 8;}
 }
 else {
-$Allowlogin = 5;
-}
+$Allowlogin = 7;}
 }
 else {
-$Allowlogin = 4;
+$Allowlogin = 6;}
 }
+else {
+$Allowlogin = 5;}
+}
+else {
+$Allowlogin = 4;}
+
+
+//display
 if ($Allowlogin ==1){
 echo '<!DOCTYPE HTML>
 <HTML>
@@ -281,7 +222,7 @@ include("includes/inc_head.php");
 echo '</HEAD>
 <BODY>
 <H1>Portal</H1>';
-echo "<P class='beh'>Welkom ".$username."<BR>Ga door naar <A HREF='beheer.php'>administratieve</A> sectie.</P>";
+echo "<P class='beh'>Welkom ".$username."<BR>Ga door naar <A HREF='hoofdmenu.php'>administratieve</A> sectie.</P>";
 echo '</BODY>
 </HTML>';
 }

@@ -13,7 +13,7 @@ include("connect.php");
 if ($connected ==1){
 	
 echo '<div class="mn"><a href="westersekruiden.php">Westerse Kruiden</a></div>';
-echo '<div class="mn"><a href="chinesekruiden">Chinese Kruiden</a></div>';
+echo '<div class="mn"><a href="chinesekruiden.php">Chinese Kruiden</a></div>';
 
 echo '<div class="mn"><a href="kruidenformules.php">Westerse Formules</a></div>';
 echo '<div class="mn"><a href="patentformules.php">Chinese Formules</a></div>';

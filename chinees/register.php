@@ -18,17 +18,9 @@ if (filter_var($_POST["username"], FILTER_SANITIZE_STRING)){
 if (filter_var($_POST["password"], FILTER_SANITIZE_STRING)){
 $username = $_POST["username"];
 $password = md5($_POST["password"]);
-//DATABASE CONNECTION VARIABLES
-include("../includes/connect.php");
-// Create connection
-$conn = new mysqli($myserver, $myname, $mypassword, $mydb);
-// Check connection
-if ($conn->connect_error) {
-die("Connection failed: " . $conn->connect_error);
-echo "<P class='error'>Could not connect</P>";
-  }
-  else {
-	    $bquery = "INSERT INTOUsers (Username, Password) VALUES (?, NOW())";
+include("connect.php");
+if ($connected ==1){
+	    $bquery = "INSERT INTO Users (Username, Password) VALUES (?, ?)";
         $bch = $conn->prepare($bquery);
         $bch->bind_param('ss', $username, $password);
         $bch->execute();
@@ -57,7 +49,7 @@ else {
 	
 }
 else {
-echo '<form method="POST" action="portal.php">
+echo '<form method="POST" action="register.php">
 <table class="inlog">
 <tr><td class="inl">Gebruikersnaam: </td><td class="inl"><input type="text" size="20" maxlength="45" name="username" /></td></tr>
 <tr><td class="inl">Wachtwoord: </td><td class="inl"><input type="password" size="20" maxlength="20" name="password" /></td></tr>

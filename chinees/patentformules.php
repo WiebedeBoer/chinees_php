@@ -107,6 +107,32 @@ else {
 	<div class="sbm"><input type="submit" value="invoeren" class="but"></div>
 </div>
 </form>';
+
+//verhoudingen
+	$wcoquery = "SELECT COUNT(ID) AS idc FROM ChineseKruiden";	
+	$wcoid = $conn->prepare($wcoquery);
+	$wcoid->execute();
+	$wcoid->bind_result($idc);
+	
+	if ($idc >=1){
+echo '<form method="post" action="patentformules.php">';
+	echo '<select name="select">';
+	$wquery = "SELECT ID, Engels FROM ChineseKruiden";	
+	$wid = $conn->prepare($wquery);
+	$wid->execute();
+	while ($rownw = $wid->fetch())
+	{
+		$znum = $rownw["id"];
+		$zengels = $rownw["Engels"];
+		echo '<option value="'.$znum.'">'.$zengels.'</option>';
+	}
+	echo '</select>';
+	echo '<br> Verhouding: <input type="text" name="verhouding">';
+	echo '<input type="submit" value="verhouding invoeren" name="but">';
+	echo '</form>';
+	}
+
+
 }		
 }
 

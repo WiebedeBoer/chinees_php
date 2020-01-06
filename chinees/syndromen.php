@@ -99,6 +99,51 @@ else {
 	<div class="inp"><input type="submit" value="invoeren" name="but"></div>
 </div>
 </form>';
+
+//actieformules
+	$wcoquery = "SELECT COUNT(ID) AS idc FROM Kruidenformules";	
+	$wcoid = $conn->prepare($wcoquery);
+	$wcoid->execute();
+	$wcoid->bind_result($idc);
+	
+	$wpcoquery = "SELECT COUNT(ID) AS idcp FROM Patentformules";	
+	$wpcoid = $conn->prepare($wpcoquery);
+	$wpcoid->execute();
+	$wpcoid->bind_result($idcp);
+	
+	if ($idc >=1 && $idcp >=1){
+echo '<form method="post" action="syndromen.php">';
+	echo 'Select name="formule">';
+	$wquery = "SELECT ID, Naam FROM Kruidenformules";	
+	$wid = $conn->prepare($wquery);
+	$wid->execute();
+	while ($rownw = $wid->fetch())
+	{
+		$znum = $rownw["ID"];
+		$znederlands = $rownw["Naam"];
+		echo '<option value="'.$znum.'">'.$znederlands.'</option>';
+	}
+	echo '</select>';
+	
+	echo '<select name="patent">';
+	$wpquery = "SELECT ID, Nederlands FROM Patentformules";	
+	$wpid = $conn->prepare($wpquery);
+	$wpid->execute();
+	while ($rownwp = $wpid->fetch())
+	{
+		$zpnum = $rownwp["ID"];
+		$zpnederlands = $rownwp["Nederlands"];
+		echo '<option value="'.$zpnum.'">'.$zpnederlands.'</option>';
+	}
+	echo '</select>';
+	
+	
+	echo '<br> Aantekening: <input type="text" name="aantekening">';
+	echo '<input type="submit" value="verhouding invoeren" name="but">';
+	echo '</form>';
+	}
+
+
 }		
 }
 

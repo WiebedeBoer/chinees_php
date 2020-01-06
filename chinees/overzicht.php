@@ -16,29 +16,29 @@ if(isset($_POST["zoekterm"]) && isset($_POST["soort"])) {
 $num = $_GET["zoekterm"];
 $soort = $_POST["soort"]
 
-if ($soort ==""){
+if ($soort =="nederlands"){
 	$ncquery = "SELECT COUNT(ID) AS counter FROM Kruiden WHERE Nederlands=?";}
-elseif ($soort ==""){
+elseif ($soort =="latijn"){
 	$ncquery = "SELECT COUNT(ID) AS counter FROM Kruiden WHERE Latijns=?";}
-elseif ($soort ==""){
+elseif ($soort =="thermo"){
 	$ncquery = "SELECT COUNT(ID) AS counter FROM Kruiden WHERE Thermodynamisch=?";}
-elseif ($soort ==""){
+elseif ($soort =="indicaties"){
 	$ncquery = "SELECT COUNT(ID) AS counter FROM Kruidenformules WHERE Indicaties=?";}
-elseif ($soort ==""){
+elseif ($soort =="naam"){
 	$ncquery = "SELECT COUNT(ID) AS counter FROM Kruidenformules WHERE Naam=?";}
-elseif ($soort ==""){
+elseif ($soort =="formule"){
 	$ncquery = "SELECT COUNT(FormulesEnKruiden.ID) as counter FROM Kruidenformules, FormulesEnKruiden, Kruiden WHERE Kruidenformules.ID=FormulesEnKruiden.IDKruidenformule AND FormulesEnKruiden.IDKruiden=Kruiden.ID AND Kruiden.Nederlands=?";}
-elseif ($soort ==""){
+elseif ($soort =="patent"){
 	$ncquery = "SELECT COUNT(ID) AS counter FROM Patentformules WHERE Nederlands=?";}
-elseif ($soort ==""){
+elseif ($soort =="engels"){
 	$ncquery = "SELECT COUNT(ID) AS counter FROM Patentformules WHERE Engels=?";}
-elseif ($soort ==""){
+elseif ($soort =="pinjin"){
 	$ncquery = "SELECT COUNT(ID) AS counter FROM Patentformules WHERE Pinjin=?";}
-elseif ($soort ==""){
+elseif ($soort =="syndroom"){
 	$ncquery = "SELECT COUNT(ID) AS counter FROM Syndromen WHERE Syndroom=?";}
-elseif ($soort ==""){
+elseif ($soort =="symptoom"){
 	$ncquery = "SELECT COUNT(ID) AS counter FROM Syndromen WHERE Pols=? OR Tong=?";}
-elseif ($soort ==""){
+elseif ($soort =="patentsymptoom"){
 	$ncquery = "SELECT COUNT(ID) AS counter FROM Syndromen WHERE Pols=search OR Tong=?";}
 else {
 	$ncquery = "SELECT COUNT(ID) AS counter FROM Kruiden WHERE Nederlands=?";}
@@ -51,29 +51,29 @@ $ncid->fetch();
 $ncid->close();
 if ($nwcheck >=1){
 
-if ($soort ==""){
+if ($soort =="nederlands"){
 	$wquery = "SELECT ID, Nederlands FROM Kruiden WHERE Nederlands=?";}
-elseif (){
+elseif ($soort =="latijn"){
 	$wquery = "SELECT ID, Latijns FROM Kruiden WHERE Latijns=?";}
-elseif (){
+elseif ($soort =="thermo"){
 	$wquery = "SELECT ID, Thermodynamisch FROM Kruiden WHERE Thermodynamisch=?";}
-elseif (){
+elseif ($soort =="indicaties"){
 	$wquery = "SELECT ID, Indicaties FROM Kruidenformules WHERE Indicaties=?";}
-elseif (){
+elseif ($soort =="naam"){
 	$wquery = "SELECT ID, Naam FROM Kruidenformules WHERE Naam=?";}
-elseif (){
+elseif ($soort =="formule"){
 	$wquery = "SELECT FormulesEnKruiden.ID AS ID, Kruidenformules.Naam AS Naam FROM Kruidenformules, FormulesEnKruiden, Kruiden WHERE Kruidenformules.ID=FormulesEnKruiden.IDKruidenformule AND FormulesEnKruiden.IDKruiden=Kruiden.ID AND Kruiden.Nederlands=?";}
-elseif (){
+elseif ($soort =="patent"){
 	$wquery = "SELECT ID, Nederlands FROM Patentformules WHERE Nederlands=?";}
-elseif (){
+elseif ($soort =="engels"){
 	$wquery = "SELECT ID, Engels FROM Patentformules WHERE Engels=?";}
-elseif (){
+elseif ($soort =="pinjin"){
 	$wquery = "SELECT ID, Pinjin FROM Patentformules WHERE Pinjin=?";}
-elseif (){
+elseif ($soort =="syndroom"){
 	$wquery = "SELECT ID, Syndroom FROM Syndromen WHERE Syndroom=?";}
-elseif (){
+elseif ($soort =="symptoom"){
 	$wquery = "SELECT ID, Pols FROM Syndromen WHERE Pols=? OR Tong= ?";}
-elseif (){
+elseif ($soort =="patentsymptoom"){
 	$wquery = "SELECT Actieformules.ID AS ID, Patentformules.Nederlands AS Nederlands FROM Syndromen, Actiesformules, Patentformules WHERE Syndromen.ID=Actieformules.Syndroom AND Actieformules.Patentformule=Patentformules.ID AND Syndromen.Hoofdsymptoom =?";}
 else {
 	$wquery = "SELECT ID, Nederlands FROM Kruiden WHERE Nederlands=?";}
@@ -85,29 +85,29 @@ else {
 	while ($rownw = $wid->fetch())
 	{
 		$znum = $rownw["id"];
-		if ($soort ==""){
+		if ($soort =="nederlands"){
 			$znaam = $rownw["Nederlands"];}
-		elseif ($soort ==""){
+		elseif ($soort =="latijn"){
 			$znaam = $rownw["Latijns"];}
-		elseif ($soort ==""){
+		elseif ($soort =="thermo"){
 			$znaam = $rownw["Thermodynamisch"];}
-		elseif ($soort ==""){
+		elseif ($soort =="indicaties"){
 			$znaam = $rownw["Indicaties"];}
-		elseif ($soort ==""){
+		elseif ($soort =="naam"){
 			$znaam = $rownw["Naam"];}
-		elseif ($soort ==""){
+		elseif ($soort =="formule"){
 			$znaam = $rownw["Naam"];}
-		elseif ($soort ==""){
+		elseif ($soort =="patent"){
 			$znaam = $rownw["Nederlands"];}	
-		elseif ($soort ==""){
+		elseif ($soort =="engels"){
 			$znaam = $rownw["Engels"];}
-		elseif ($soort ==""){
+		elseif ($soort =="pinjin"){
 			$znaam = $rownw["Pinjin"];}
-		elseif ($soort ==""){
+		elseif ($soort =="syndroom"){
 			$znaam = $rownw["Syndroom"];}	
-		elseif ($soort ==""){
+		elseif ($soort =="symptoom"){
 			$znaam = $rownw["Pols"];}
-		elseif ($soort ==""){
+		elseif ($soort =="patentsymptoom"){
 			$znaam = $rownw["Nederlands"];}
 		else {
 			$znaam = $rownw["Nederlands"];}				
@@ -116,29 +116,29 @@ echo '<div class="item">';
 //display
 echo $znum.' '.$znaam.' <input type="submit" value="update" name="but">';
 //update
-if ($soort ==""){
+if ($soort =="nederlands"){
 	echo '<a href="westersekruiden.php?id='.$znum.'">'.$znaam.'</a>';}
-elseif ($soort ==""){
+elseif ($soort =="latijn"){
 	echo '<a href="westersekruiden.php?id='.$znum.'">'.$znaam.'</a>';}
-elseif ($soort ==""){
+elseif ($soort =="thermo"){
 	echo '<a href="westersekruiden.php?id='.$znum.'">'.$znaam.'</a>';}
-elseif ($soort ==""){
+elseif ($soort =="indicaties"){
 	echo '<a href="kruidenformules.php?id='.$znum.'">'.$znaam.'</a>';}
-elseif ($soort ==""){
+elseif ($soort =="naam"){
 	echo '<a href="kruidenformules.php?id='.$znum.'">'.$znaam.'</a>';}
-elseif ($soort ==""){
+elseif ($soort =="formule"){
 	echo '<a href="kruidenformules.php?id='.$znum.'">'.$znaam.'</a>';}
-elseif ($soort ==""){
+elseif ($soort =="patent"){
 	echo '<a href="patentformules.php?id='.$znum.'">'.$znaam.'</a>';}
-elseif ($soort ==""){
+elseif ($soort =="engels"){
 	echo '<a href="patentformules.php?id='.$znum.'">'.$znaam.'</a>';}
-elseif ($soort ==""){
+elseif ($soort =="pinjin"){
 	echo '<a href="patentformules.php?id='.$znum.'">'.$znaam.'</a>';}
-elseif ($soort ==""){
+elseif ($soort =="syndroom"){
 	echo '<a href="syndromen.php?id='.$znum.'">'.$znaam.'</a>';}
-elseif ($soort ==""){
+elseif ($soort =="symptoom"){
 	echo '<a href="syndromen.php?id='.$znum.'">'.$znaam.'</a>';}
-elseif ($soort ==""){
+elseif ($soort =="patentsymptoom"){
 	echo '<a href="patentformules.php?id='.$znum.'">'.$znaam.'</a>';}
 else {
 	echo '<a href="westersekruiden.php?id='.$znum.'">'.$znaam.'</a>';}
@@ -167,9 +167,11 @@ else(isset($_POST["delete"]) && isset($_POST["type"]) && isset($_POST["term"])) 
 $num = $_GET["term"];
 $soort = $_POST["type"];
 $sid = $_POST["type"];
+/*
 if (){
 	
 }
+*/
 echo '<p>verwijderd</p><form method="POST" action="overzicht.php">
 <input type="hidden" value="'.$soort.'" name="soort"><input type="hidden" value="'.$num.'" name="zoekterm">
 <input type="submit" value="terug" name="but"></form>';

@@ -22,19 +22,21 @@ echo '<div class="mn"><a href="syndromen.php">Syndromen</a></div>';
 echo '<div class="mn"><a href="syndroomacties.php">Syndromen Acties</a></div>';
 
 echo '<div class="mn"><form method="post" action="overzicht.php"><inout type="text" name="zoekterm"><select name="soort">
-<option value="">Nederlandse naam kruid</option>
-<option value="">Latijnse naam kruid</option>
-<option value="">Thermodynamisch in kruid</option>
-<option value="">Indicaties in kruidenformule</option>
-<option value="">Naam kruidenformule</option>
-<option value="">Kruid in kruidenformule</option>
-<option value="">Nederlandse naam patentformule</option>
-<option value="">Engelse naam patentformule</option>
-<option value="">Pinjin naam patentformule</option>
-<option value="">Syndroom naam</option>
-<option value="">Syndroom op symptomen pols en tong</option>
-<option value="">Patentformule op symptoom</option>
-</select></form></div>';
+<option value="nederlands">Nederlandse naam kruid</option>
+<option value="latijn">Latijnse naam kruid</option>
+<option value="thermo">Thermodynamisch in kruid</option>
+<option value="indicaties">Indicaties in kruidenformule</option>
+<option value="naam">Naam kruidenformule</option>
+<option value="formule">Kruid in kruidenformule</option>
+<option value="patent">Nederlandse naam patentformule</option>
+<option value="engels">Engelse naam patentformule</option>
+<option value="pinjin">Pinjin naam patentformule</option>
+<option value="syndroom">Syndroom naam</option>
+<option value="symptoom">Syndroom op symptomen pols en tong</option>
+<option value="patentsymptoom">Patentformule op symptoom</option>
+</select>
+<input type="submit" value="zoek" name="but">
+</form></div>';
 	
 }
 ?>

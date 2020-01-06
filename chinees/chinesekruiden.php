@@ -11,6 +11,7 @@ include("includes/inc_head.php");
 <?php
 include("connect.php");
 if ($connected ==1){
+	echo '<p><a href="hoofdmenu.php">hoofdmenu</a></p>';
 	
 if (isset($_GET["id"])){
 	if (filter_var($_GET["id"], FILTER_VALIDATE_INT)){
@@ -53,6 +54,7 @@ else {
 	<div class="inl">Werking: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="werking">'.$werking.'</TEXTAREA></WRAP></div>
 	<div class="inl">Indicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="indicaties">'.$indicaties.'</TEXTAREA></WRAP></div>
 	<div class="inl">Dosering: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="dosering">'.$dosering.'</TEXTAREA></WRAP></div>
+	<div class="inp"><input type="submit" value="update" name="but"></div>
 	</div></form>';
 	
 }
@@ -66,6 +68,12 @@ if(isset($_POST["engels"]) && isset($_POST["latijn"]) && isset($_POST["pinjin"])
         $iid->bind_param('ssssssssss', $new_engels, $new_latijn, $new_pinjin, $new_klasse, $new_thermodynamisch, $new_meridiaan, $new_qi, $new_werking, $new_indicaties, $new_dosering);
         $iid->execute();
         $iid->close();
+			$mwquery = "SELECT MAX(ID) AS Maxid FROM ChineseKruiden";
+	$result_wpg = $conn->query($mwquery);
+	$rowwpg = $result_wpg->fetch_assoc();
+	$maxid = $rowwpg['Maxid'];
+		
+		echo '<p><a href="chinesekruiden.php?id='.$maxid.'">ingevoerd</a></p>';
 }
 //form
 else {
@@ -81,6 +89,7 @@ else {
 	<div class="inl">Werking: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="werking"></TEXTAREA></WRAP></div>
 	<div class="inl">Indicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="indicaties"></TEXTAREA></WRAP></div>
 	<div class="inl">Dosering: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="dosering"></TEXTAREA></WRAP></div>
+	<div class="inp"><input type="submit" value="invoeren" name="but"></div>
 </div>
 </form>';
 }		

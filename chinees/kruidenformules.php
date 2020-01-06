@@ -12,6 +12,7 @@ include("includes/inc_head.php");
 include("connect.php");
 if ($connected ==1){
 	
+	echo '<p><a href="hoofdmenu.php">hoofdmenu</a></p>';
 if (isset($_GET["id"])){
 	if (filter_var($_GET["id"], FILTER_VALIDATE_INT)){
 	$num = $_GET["id"];

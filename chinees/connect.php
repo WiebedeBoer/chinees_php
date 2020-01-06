@@ -1,4 +1,7 @@
 <?php
+
+
+
 //DATABASE CONNECTION VARIABLES
 $myserver ="localhost";
 $myname = "geennaam";

@@ -12,6 +12,7 @@ include("includes/inc_head.php");
 include("connect.php");
 if ($connected ==1){
 	
+	echo '<p><a href="hoofdmenu.php">hoofdmenu</a></p>';
 if (isset($_GET["id"])){
 	if (filter_var($_GET["id"], FILTER_VALIDATE_INT)){
 	$num = $_GET["id"];
@@ -42,15 +43,16 @@ else {
 	$wid->fetch();
 	$wid->close();
 	echo '<form method="POST" action="syndromen.php?id='.$num.'"><div class="invul">
-	<div class="inl">Syndroom: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$syndroom.'</TEXTAREA></WRAP></div>
-	<div class="inl">Symptomen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$symptoom.'</TEXTAREA></WRAP></div>
-	<div class="inl">Hoofdsymptoom: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$hoofdsymptoom.'</TEXTAREA></WRAP></div>
-	<div class="inl">Tong: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$tong.'</TEXTAREA></WRAP></div>
-	<div class="inl">Pols: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$pols.'</TEXTAREA></WRAP></div>
-	<div class="inl">Etiologie: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$etiologie.'</TEXTAREA></WRAP></div>
-	<div class="inl">Pathologie: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$pathologie.'</TEXTAREA></WRAP></div>
-	<div class="inl">Voorlopers: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$voorlopers.'</TEXTAREA></WRAP></div>
-	<div class="inl">Ontwikkelingen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$ontwikkelingen.'</TEXTAREA></WRAP></div>
+	<div class="inl">Syndroom: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="syndroom">'.$syndroom.'</TEXTAREA></WRAP></div>
+	<div class="inl">Symptomen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="symptoom">'.$symptoom.'</TEXTAREA></WRAP></div>
+	<div class="inl">Hoofdsymptoom: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="hoofdsymptoom">'.$hoofdsymptoom.'</TEXTAREA></WRAP></div>
+	<div class="inl">Tong: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="tong">'.$tong.'</TEXTAREA></WRAP></div>
+	<div class="inl">Pols: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="pols">'.$pols.'</TEXTAREA></WRAP></div>
+	<div class="inl">Etiologie: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="etiologie">'.$etiologie.'</TEXTAREA></WRAP></div>
+	<div class="inl">Pathologie: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="pathologie">'.$pathologie.'</TEXTAREA></WRAP></div>
+	<div class="inl">Voorlopers: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="voorlopers">'.$voorlopers.'</TEXTAREA></WRAP></div>
+	<div class="inl">Ontwikkelingen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="ontwikkelingen">'.$ontwikkelingen.'</TEXTAREA></WRAP></div>
+	<div class="inp"><input type="submit" value="update" name="but"></div>
 	</div></form>';
 	
 }
@@ -73,20 +75,28 @@ if (isset($_POST["syndroom"]) && isset($_POST["symptoom"]) && isset($_POST["hoof
         $iid->bind_param('sssssssss', $new_syndroom, $new_symptoom, $new_hoofdsymptoom, $new_tong, $new_pols, $new_etiologie, $new_pathologie, $new_voorlopers, $new_ontwikkelingen);
         $iid->execute();
         $iid->close();
+		
+	$mwquery = "SELECT MAX(ID) AS Maxid FROM Syndromen";
+	$result_wpg = $conn->query($mwquery);
+	$rowwpg = $result_wpg->fetch_assoc();
+	$maxid = $rowwpg['Maxid'];
+		
+		echo '<p><a href="syndromen.php?id='.$maxid.'">ingevoerd</a></p>';
 }
 //form
 else {
 	echo '<form method="POST" action="syndromen.php">
 <div class="invul">
-	<div class="inl">Syndroom: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
-	<div class="inl">Symptomen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
-	<div class="inl">Hoofdsymptoom: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
-	<div class="inl">Tong: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
-	<div class="inl">Pols: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
-	<div class="inl">Etiologie: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
-	<div class="inl">Pathologie: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
-	<div class="inl">Voorlopers: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
-	<div class="inl">Ontwikkelingen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
+	<div class="inl">Syndroom: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="syndroom"></TEXTAREA></WRAP></div>
+	<div class="inl">Symptomen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="symptoom"></TEXTAREA></WRAP></div>
+	<div class="inl">Hoofdsymptoom: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="hoofdsymptoom"></TEXTAREA></WRAP></div>
+	<div class="inl">Tong: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="tong"></TEXTAREA></WRAP></div>
+	<div class="inl">Pols: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="pols"></TEXTAREA></WRAP></div>
+	<div class="inl">Etiologie: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="etiologie"></TEXTAREA></WRAP></div>
+	<div class="inl">Pathologie: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="pathologie"></TEXTAREA></WRAP></div>
+	<div class="inl">Voorlopers: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="voorlopers"></TEXTAREA></WRAP></div>
+	<div class="inl">Ontwikkelingen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="ontwikkelingen"></TEXTAREA></WRAP></div>
+	<div class="inp"><input type="submit" value="invoeren" name="but"></div>
 </div>
 </form>';
 }		

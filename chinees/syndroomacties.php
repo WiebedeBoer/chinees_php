@@ -12,6 +12,7 @@ include("includes/inc_head.php");
 include("connect.php");
 if ($connected ==1){
 	
+	echo '<p><a href="hoofdmenu.php">hoofdmenu</a></p>';
 if (isset($_GET["id"])){
 	if (filter_var($_GET["id"], FILTER_VALIDATE_INT)){
 	$num = $_GET["id"];
@@ -41,6 +42,7 @@ else {
 	<div class="inl">Actie: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="actie">'.$actie.'</TEXTAREA></WRAP></div>
 	<div class="inl">Acupunctuurpunten: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="acupunctuurpunten">'.$acupunctuurpunten.'</TEXTAREA></WRAP></div>
 	<div class="inl">Opmerkingen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="opmerkingen">'.$opmerkingen.'</TEXTAREA></WRAP></div>
+	<div class="inp"><input type="submit" value="update" name="but"></div>
 	</div></form>';
 	
 }
@@ -63,6 +65,7 @@ else {
 	<div class="inl">Actie: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="actie"></TEXTAREA></WRAP></div>
 	<div class="inl">Acupunctuurpunten: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="acupunctuurpunten"></TEXTAREA></WRAP></div>
 	<div class="inl">Opmerkingen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="opmerkingen"></TEXTAREA></WRAP></div>
+	<div class="inp"><input type="submit" value="invoeren" name="but"></div>
 </div>
 </form>';
 }		

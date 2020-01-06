@@ -12,6 +12,7 @@ include("includes/inc_head.php");
 include("connect.php");
 if ($connected ==1){
 	
+	echo '<p><a href="hoofdmenu.php">hoofdmenu</a></p>';
 if (isset($_GET["id"])){
 	if (filter_var($_GET["id"], FILTER_VALIDATE_INT)){
 	$num = $_GET["id"];
@@ -30,6 +31,8 @@ if(isset($_POST["nederlands"]) && isset($_POST["engels"]) && isset($_POST["pinji
 	$upid->bind_param('ssssssssi', $new_nederlands, $new_engels, $new_pijin, $new_werking, $new_tong, $new_pols, $new_contraindicaties, $new_indicaties, $num);
 	$upid->execute();
 	$upid->close();
+	
+	'<p><a href="hoofdmenu.php">aangepast</a></p>';
 }
 //fetch
 else {
@@ -41,14 +44,15 @@ else {
 	$wid->fetch();
 	$wid->close();
 	echo '<form method="POST" action="patentformules.php?id='.$num.'"><div class="invul">
-	<div class="inl">Nederlands: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$nederlands.'</TEXTAREA></WRAP></div>
-	<div class="inl">Engels: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$engels.'</TEXTAREA></WRAP></div>
-	<div class="inl">Pinjin: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$pinjin.'</TEXTAREA></WRAP></div>
-	<div class="inl">Werking: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$werking.'</TEXTAREA></WRAP></div>
-	<div class="inl">Tong: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$tong.'</TEXTAREA></WRAP></div>
-	<div class="inl">Pols: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$pols.'</TEXTAREA></WRAP></div>
-	<div class="inl">Contraindicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$contraindicaties.'</TEXTAREA></WRAP></div>
-	<div class="inl">Indicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$indicaties.'</TEXTAREA></WRAP></div>
+	<div class="inl">Nederlands: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="nederlands">'.$nederlands.'</TEXTAREA></WRAP></div>
+	<div class="inl">Engels: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="engels">'.$engels.'</TEXTAREA></WRAP></div>
+	<div class="inl">Pinjin: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="pinjin">'.$pinjin.'</TEXTAREA></WRAP></div>
+	<div class="inl">Werking: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="werking">'.$werking.'</TEXTAREA></WRAP></div>
+	<div class="inl">Tong: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="tong">'.$tong.'</TEXTAREA></WRAP></div>
+	<div class="inl">Pols: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="pols">'.$pols.'</TEXTAREA></WRAP></div>
+	<div class="inl">Contraindicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="contraindicaties">'.$contraindicaties.'</TEXTAREA></WRAP></div>
+	<div class="inl">Indicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="indicaties">'.$indicaties.'</TEXTAREA></WRAP></div>
+	<div class="sbm"><input type="submit" value="update" class="but"></div>
 	</div></form>';
 	
 }
@@ -70,19 +74,37 @@ if(isset($_POST["nederlands"]) && isset($_POST["engels"]) && isset($_POST["pinji
         $iid->bind_param('ssssssss', $new_nederlands, $new_engels, $new_pijin, $new_werking, $new_tong, $new_pols, $new_contraindicaties, $new_indicaties);
         $iid->execute();
         $iid->close();
+		
+	/*
+	$ccquery = "SELECT MAX(ID) AS Maxid FROM Patentformules";
+	$cid = $conn->prepare($ccquery);
+	$cid->bind_param('i', $deletor);
+	$cid->execute();
+	$cid->bind_result($catcheck);
+	$cid->fetch();
+	$cid->close();
+	*/
+	
+	$mwquery = "SELECT MAX(ID) AS Maxid FROM Patentformules";
+	$result_wpg = $conn->query($mwquery);
+	$rowwpg = $result_wpg->fetch_assoc();
+	$maxid = $rowwpg['Maxid'];
+		
+		echo '<p><a href="patentformules.php?id='.$maxid.'">ingevoerd</a></p>';
 }
 //form
 else {
 	echo '<form method="POST" action="patentformules.php">
 <div class="invul">
-<div class="inl">Nederlands: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
-<div class="inl">Engels: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
-<div class="inl">Pinjin: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
-<div class="inl">Werking: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
-<div class="inl">Tong: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
-<div class="inl">Pols: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
-<div class="inl">Contraindicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
-<div class="inl">Indicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
+<div class="inl">Nederlands: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="nederlands"></TEXTAREA></WRAP></div>
+<div class="inl">Engels: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="engels"></TEXTAREA></WRAP></div>
+<div class="inl">Pinjin: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="pinjin"></TEXTAREA></WRAP></div>
+<div class="inl">Werking: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="werking"></TEXTAREA></WRAP></div>
+<div class="inl">Tong: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="tong"></TEXTAREA></WRAP></div>
+<div class="inl">Pols: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="pols"></TEXTAREA></WRAP></div>
+<div class="inl">Contraindicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="contraindicaties"></TEXTAREA></WRAP></div>
+<div class="inl">Indicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="indicaties"></TEXTAREA></WRAP></div>
+	<div class="sbm"><input type="submit" value="invoeren" class="but"></div>
 </div>
 </form>';
 }		

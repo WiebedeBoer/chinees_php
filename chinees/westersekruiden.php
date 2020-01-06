@@ -12,6 +12,7 @@ include("includes/inc_head.php");
 include("connect.php");
 if ($connected ==1){
 	
+	echo '<p><a href="hoofdmenu.php">hoofdmenu</a></p>';
 if (isset($_GET["id"])){
 	if (filter_var($_GET["id"], FILTER_VALIDATE_INT)){
 	$num = $_GET["id"];
@@ -38,6 +39,7 @@ else {
 	<div class="inl">: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'..'</TEXTAREA></WRAP></div>
 	<div class="inl">: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'..'</TEXTAREA></WRAP></div>
 	<div class="inl">: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'..'</TEXTAREA></WRAP></div>
+	<div class="inp"><input type="submit" value="update" name="but"></div>
 	</div></form>';
 	
 }
@@ -51,6 +53,13 @@ if (isset($_POST[""]) && isset($_POST[""]) && isset($_POST[""]) && isset($_POST[
         $iid->bind_param('sss', $rawtitle, $datum, $modtext);
         $iid->execute();
         $iid->close();
+		
+					$mwquery = "SELECT MAX(ID) AS Maxid FROM Kruiden";
+	$result_wpg = $conn->query($mwquery);
+	$rowwpg = $result_wpg->fetch_assoc();
+	$maxid = $rowwpg['Maxid'];
+		
+		echo '<p><a href="westersekruiden.php?id='.$maxid.'">ingevoerd</a></p>';
 }
 //form
 else {
@@ -60,6 +69,7 @@ else {
 <div class="inl">: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
 <div class="inl">: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
 <div class="inl">: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name=""></TEXTAREA></WRAP></div>
+<div class="inp"><input type="submit" value="invoeren" name="but"></div>
 </div>
 </form>';
 }		

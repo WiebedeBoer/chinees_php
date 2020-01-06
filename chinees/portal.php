@@ -26,6 +26,7 @@ die("Connection failed: " . $conn->connect_error);
 echo "<P class='error'>Could not connect</P>";
   }
 else {
+	/*
 //bruteforce protection
 $brutequery = "SELECT tries FROM Brute WHERE User = ? AND DATE_ADD(block_time, INTERVAL 30 MINUTE) >= NOW()";
 $brute = $conn->prepare($brutequery);
@@ -36,6 +37,7 @@ $brute->fetch();
 $brute->close();
 // blockeer inloggen als gebruiker 5x heeft geprobeert in te loggen.
 if ($tries < 5){
+	*/
 //COUNT USER
 $cquery = "SELECT COUNT(*) AS usercheck, ID, Password, Cokey FROM Users WHERE Username = ?";
 $cid = $conn->prepare($cquery);
@@ -84,6 +86,7 @@ $uid->close();
 $Allowlogin = 11;
 }
 else {
+	/*
     //Brutecheck
     $cbquery = "SELECT COUNT(*) AS usernamecount FROM Brute WHERE User = ?";
     $cbch = $conn->prepare($cbquery);
@@ -110,6 +113,7 @@ else {
             $buu->bind_param('s', $username);
             $buu->execute();
             $buu->close();
+			*/
         }
 $Allowlogin = 10;
 }
@@ -117,10 +121,14 @@ $Allowlogin = 10;
 else {
 $Allowlogin = 9;
 }
+
+/*
 }
 else {
 $Allowlogin = 2;
 }
+*/
+
 /*
 }
 */

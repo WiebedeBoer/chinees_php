@@ -33,6 +33,7 @@ if(isset($_POST["engels"]) && isset($_POST["latijn"]) && isset($_POST["pinjin"])
 	$upid->bind_param('ssssssssssi', $new_engels, $new_latijn, $new_pinjin, $new_klasse, $new_thermodynamisch, $new_meridiaan, $new_qi, $new_werking, $new_indicaties, $new_dosering, $num);
 	$upid->execute();
 	$upid->close();
+	echo '<p><a href="chinesekruiden.php?id='.$num.'">aangepast</a></p>';
 }
 //fetch
 else {
@@ -43,6 +44,7 @@ else {
 	$wid->bind_result($engels, $latijn, $pinjin, $klasse, $thermodynamisch, $meridiaan, $qi, $werking, $indicaties, $dosering);
 	$wid->fetch();
 	$wid->close();
+ 
 	echo '<form method="POST" action="chinesekruiden.php?id='.$num.'"><div class="invul">
 	<div class="inl">Engels: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="engels">'.$engels.'</TEXTAREA></WRAP></div>
 	<div class="inl">Latijn: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="latijn">'.$latijn.'</TEXTAREA></WRAP></div>

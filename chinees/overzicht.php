@@ -52,31 +52,31 @@ $ncid->close();
 if ($nwcheck >=1){
 
 if ($soort =="nederlands"){
-	$wquery = "SELECT ID, Nederlands FROM Kruiden WHERE Nederlands=?";}
+	$wquery = "SELECT ID, Nederlands FROM Kruiden WHERE Nederlands LIKE?";}
 elseif ($soort =="latijn"){
-	$wquery = "SELECT ID, Latijns FROM Kruiden WHERE Latijns=?";}
+	$wquery = "SELECT ID, Latijns FROM Kruiden WHERE Latijns LIKE?";}
 elseif ($soort =="thermo"){
-	$wquery = "SELECT ID, Thermodynamisch FROM Kruiden WHERE Thermodynamisch=?";}
+	$wquery = "SELECT ID, Thermodynamisch FROM Kruiden WHERE Thermodynamisch LIKE ?";}
 elseif ($soort =="indicaties"){
-	$wquery = "SELECT ID, Indicaties FROM Kruidenformules WHERE Indicaties=?";}
+	$wquery = "SELECT ID, Indicaties FROM Kruidenformules WHERE Indicaties LIKE ?";}
 elseif ($soort =="naam"){
-	$wquery = "SELECT ID, Naam FROM Kruidenformules WHERE Naam=?";}
+	$wquery = "SELECT ID, Naam FROM Kruidenformules WHERE Naam LIKE ?";}
 elseif ($soort =="formule"){
-	$wquery = "SELECT FormulesEnKruiden.ID AS ID, Kruidenformules.Naam AS Naam FROM Kruidenformules, FormulesEnKruiden, Kruiden WHERE Kruidenformules.ID=FormulesEnKruiden.IDKruidenformule AND FormulesEnKruiden.IDKruiden=Kruiden.ID AND Kruiden.Nederlands=?";}
+	$wquery = "SELECT FormulesEnKruiden.ID AS ID, Kruidenformules.Naam AS Naam FROM Kruidenformules, FormulesEnKruiden, Kruiden WHERE Kruidenformules.ID=FormulesEnKruiden.IDKruidenformule AND FormulesEnKruiden.IDKruiden=Kruiden.ID AND Kruiden.Nederlands LIKE ?";}
 elseif ($soort =="patent"){
-	$wquery = "SELECT ID, Nederlands FROM Patentformules WHERE Nederlands=?";}
+	$wquery = "SELECT ID, Nederlands FROM Patentformules WHERE Nederlands LIKE ?";}
 elseif ($soort =="engels"){
-	$wquery = "SELECT ID, Engels FROM Patentformules WHERE Engels=?";}
+	$wquery = "SELECT ID, Engels FROM Patentformules WHERE Engels LIKE ?";}
 elseif ($soort =="pinjin"){
-	$wquery = "SELECT ID, Pinjin FROM Patentformules WHERE Pinjin=?";}
+	$wquery = "SELECT ID, Pinjin FROM Patentformules WHERE Pinjin LIKE ?";}
 elseif ($soort =="syndroom"){
-	$wquery = "SELECT ID, Syndroom FROM Syndromen WHERE Syndroom=?";}
+	$wquery = "SELECT ID, Syndroom FROM Syndromen WHERE Syndroom LIKE ?";}
 elseif ($soort =="symptoom"){
-	$wquery = "SELECT ID, Pols FROM Syndromen WHERE Pols=? OR Tong= ?";}
+	$wquery = "SELECT ID, Pols FROM Syndromen WHERE Pols LIKE ? OR Tong LIKE ?";}
 elseif ($soort =="patentsymptoom"){
-	$wquery = "SELECT Actieformules.ID AS ID, Patentformules.Nederlands AS Nederlands FROM Syndromen, Actiesformules, Patentformules WHERE Syndromen.ID=Actieformules.Syndroom AND Actieformules.Patentformule=Patentformules.ID AND Syndromen.Hoofdsymptoom =?";}
+	$wquery = "SELECT Actieformules.ID AS ID, Patentformules.Nederlands AS Nederlands FROM Syndromen, Actiesformules, Patentformules WHERE Syndromen.ID=Actieformules.Syndroom AND Actieformules.Patentformule=Patentformules.ID AND Syndromen.Hoofdsymptoom LIKE ?";}
 else {
-	$wquery = "SELECT ID, Nederlands FROM Kruiden WHERE Nederlands=?";}
+	$wquery = "SELECT ID, Nederlands FROM Kruiden WHERE Nederlands LIKE ?";}
 	
 	$wid = $conn->prepare($wquery);
 	$wid->bind_param('s', $num);

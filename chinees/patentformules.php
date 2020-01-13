@@ -32,7 +32,7 @@ if(isset($_POST["nederlands"]) && isset($_POST["engels"]) && isset($_POST["pinji
 	$upid->execute();
 	$upid->close();
 	
-	'<p><a href="hoofdmenu.php">aangepast</a></p>';
+	echo '<p><a href="patentformules.php?id='.$num.'">aangepast</a></p>';
 }
 //fetch
 else {

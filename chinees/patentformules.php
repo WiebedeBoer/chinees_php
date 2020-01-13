@@ -34,6 +34,32 @@ if(isset($_POST["nederlands"]) && isset($_POST["engels"]) && isset($_POST["pinji
 	
 	echo '<p><a href="patentformules.php?id='.$num.'">aangepast</a></p>';
 }
+elseif($_POST["select"]) && isset($_POST["verhouding"])){
+	$new_select = $_POST["select"];
+	$new_verhouding = $_POST["verhouding"];
+	
+		$iquery = "INSERT INTO PatentEnKruiden (Patentformule, Chinesekruiden, Verhouding) VALUES (?, ?, ?)";
+        $iid = $conn->prepare($iquery);
+        $iid->bind_param('iii', $num, $new_select, $new_verhouding);
+        $iid->execute();
+        $iid->close();
+	
+	echo '<p><a href="patentformules.php?id='.$num.'">verhouding ingevoerd</a></p>';
+	
+}
+elseif($_POST["del"])){
+	$new_del = $_POST["del"];
+
+	
+		$iquery = "DELETE FROM PatentEnKruiden WHERE ID =?";
+        $iid = $conn->prepare($iquery);
+        $iid->bind_param('i', $new_del);
+        $iid->execute();
+        $iid->close();
+	
+	echo '<p><a href="patentformules.php?id='.$num.'">verhouding verwijderd</a></p>';
+	
+}
 //fetch
 else {
 	$wquery = "SELECT Nederlands, Engels, Pinjin, Werking, Tong, Pols, Contraindicaties, Indicaties FROM Patentformules WHERE ID = ?";
@@ -54,6 +80,54 @@ else {
 	<div class="inl">Indicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="indicaties">'.$indicaties.'</TEXTAREA></WRAP></div>
 	<div class="sbm"><input type="submit" value="update" class="but"></div>
 	</div></form>';
+	
+	//verhoudingen verwijderen
+	$wcfquery = "SELECT COUNT(ID) AS idc FROM PatentEnKruiden WHERE Patentformule =?";	
+	$wcfid = $conn->prepare($wcfquery);
+	$wcfid->bind_param('i', $num);
+	$wcfid->execute();
+	$wcfid->bind_result($idcf);	
+	if ($idcf >=1){
+	echo '<select name="select">';
+	$wfquery = "SELECT ID, Verhouding FROM PatentEnKruiden WHERE Patentformule =?";	
+	$wfid = $conn->prepare($wfquery);
+	$wfid->execute();
+	while ($rownw = $wfid->fetch())
+	{
+		echo '<form method="post" action="kruidenformules.php?id='.$num.'">';
+		$zfnum = $rownwf["id"];
+		$zfverhouding = $rownwf["Verhouding"];
+		echo $zfverhouding.'<br>';
+		echo '<input type="hidden" value="'.$zfnum.'" name="del"><br>';
+		echo '<input type="submit" value="verhouding verwijderen" name="but">';
+		echo '</form>';
+	}
+	echo '<br> Verhouding: <input type="text" name="verhouding">';
+	}	
+	
+	//verhoudingen invoeren
+	$wcoquery = "SELECT COUNT(ID) AS idc FROM ChineseKruiden";	
+	$wcoid = $conn->prepare($wcoquery);
+	$wcoid->execute();
+	$wcoid->bind_result($idc);
+	
+	if ($idc >=1){
+echo '<form method="post" action="patentformules.php?id='.$num.'">';
+	echo '<select name="select">';
+	$wquery = "SELECT ID, Engels FROM ChineseKruiden";	
+	$wid = $conn->prepare($wquery);
+	$wid->execute();
+	while ($rownw = $wid->fetch())
+	{
+		$znum = $rownw["id"];
+		$zengels = $rownw["Engels"];
+		echo '<option value="'.$znum.'">'.$zengels.'</option>';
+	}
+	echo '</select>';
+	echo '<br> Verhouding: <input type="text" name="verhouding">';
+	echo '<input type="submit" value="verhouding invoeren" name="but">';
+	echo '</form>';
+	}
 	
 }
 	}		
@@ -108,29 +182,7 @@ else {
 </div>
 </form>';
 
-//verhoudingen
-	$wcoquery = "SELECT COUNT(ID) AS idc FROM ChineseKruiden";	
-	$wcoid = $conn->prepare($wcoquery);
-	$wcoid->execute();
-	$wcoid->bind_result($idc);
-	
-	if ($idc >=1){
-echo '<form method="post" action="patentformules.php">';
-	echo '<select name="select">';
-	$wquery = "SELECT ID, Engels FROM ChineseKruiden";	
-	$wid = $conn->prepare($wquery);
-	$wid->execute();
-	while ($rownw = $wid->fetch())
-	{
-		$znum = $rownw["id"];
-		$zengels = $rownw["Engels"];
-		echo '<option value="'.$znum.'">'.$zengels.'</option>';
-	}
-	echo '</select>';
-	echo '<br> Verhouding: <input type="text" name="verhouding">';
-	echo '<input type="submit" value="verhouding invoeren" name="but">';
-	echo '</form>';
-	}
+
 
 
 }		

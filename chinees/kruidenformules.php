@@ -37,6 +37,32 @@ if (isset($_POST["naam"]) && isset($_POST["indicaties"]) && isset($_POST["werkin
 	
 		echo '<p><a href="kruidenformules.php?id='.$num.'">aangepast</a></p>';
 }
+elseif($_POST["select"]) && isset($_POST["verhouding"])){
+	$new_select = $_POST["select"];
+	$new_verhouding = $_POST["verhouding"];
+	
+		$iquery = "INSERT INTO FormulesEnKruiden (Kruidenformule, Kruiden, Verhouding) VALUES (?, ?, ?)";
+        $iid = $conn->prepare($iquery);
+        $iid->bind_param('iii', $num, $new_select, $new_verhouding);
+        $iid->execute();
+        $iid->close();
+	
+echo '<p><a href="kruidenformules.php?id='.$num.'">verhouding ingevoerd</a></p>';
+	
+}
+elseif($_POST["del"])){
+	$new_del = $_POST["del"];
+
+	
+		$iquery = "DELETE FROM FormulesEnKruiden WHERE ID =?";
+        $iid = $conn->prepare($iquery);
+        $iid->bind_param('i', $new_del);
+        $iid->execute();
+        $iid->close();
+	
+	echo '<p><a href="kruidenformules.php?id='.$num.'">verhouding verwijderd</a></p>';
+	
+}
 //fetch
 else {
 	
@@ -59,6 +85,55 @@ else {
 <div class="inl">Contraindicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="contraindicaties">'.$new_contraindicaties.'</TEXTAREA></WRAP></div>
 	<div class="inp"><input type="submit" value="update" name="but"></div>
 	</div></form>';
+	
+	//verhoudingen verwijderen
+	$wcfquery = "SELECT COUNT(ID) AS idc FROM FormulesEnKruiden WHERE Kruidenformule =?";	
+	$wcfid = $conn->prepare($wcfquery);
+	$wcfid->bind_param('i', $num);
+	$wcfid->execute();
+	$wcfid->bind_result($idcf);	
+	if ($idcf >=1){
+	echo '<select name="select">';
+	$wfquery = "SELECT ID, Verhouding FROM FormulesEnKruiden WHERE Kruidenformule =?";	
+	$wfid = $conn->prepare($wfquery);
+	$wfid->execute();
+	while ($rownw = $wfid->fetch())
+	{
+		echo '<form method="post" action="kruidenformules.php?id='.$num.'">';
+		$zfnum = $rownwf["id"];
+		$zfverhouding = $rownwf["Verhouding"];
+		echo $zfverhouding.'<br>';
+		echo '<input type="hidden" value="'.$zfnum.'" name="del"><br>';
+		echo '<input type="submit" value="verhouding verwijderen" name="but">';
+		echo '</form>';
+	}
+	echo '<br> Verhouding: <input type="text" name="verhouding">';
+	}	
+	
+	
+	//verhouding invoeren
+	$wcoquery = "SELECT COUNT(ID) AS idc FROM Kruiden";	
+	$wcoid = $conn->prepare($wcoquery);
+	$wcoid->execute();
+	$wcoid->bind_result($idc);
+	
+	if ($idc >=1){
+echo '<form method="post" action="kruidenformules.php?id='.$num.'">';
+	echo '<select name="select">';
+	$wquery = "SELECT ID, Nederlands FROM Kruiden";	
+	$wid = $conn->prepare($wquery);
+	$wid->execute();
+	while ($rownw = $wid->fetch())
+	{
+		$znum = $rownw["id"];
+		$znederlands = $rownw["Nederlands"];
+		echo '<option value="'.$znum.'">'.$znederlands.'</option>';
+	}
+	echo '</select>';
+	echo '<br> Verhouding: <input type="text" name="verhouding">';
+	echo '<input type="submit" value="verhouding invoeren" name="but">';
+	echo '</form>';
+	}
 	
 	
 }
@@ -101,28 +176,7 @@ else {
 </div>
 </form>';
 
-	$wcoquery = "SELECT COUNT(ID) AS idc FROM Kruiden";	
-	$wcoid = $conn->prepare($wcoquery);
-	$wcoid->execute();
-	$wcoid->bind_result($idc);
-	
-	if ($idc >=1){
-echo '<form method="post" action="kruidenformules.php">';
-	echo '<select name="select">';
-	$wquery = "SELECT ID, Nederlands FROM Kruiden";	
-	$wid = $conn->prepare($wquery);
-	$wid->execute();
-	while ($rownw = $wid->fetch())
-	{
-		$znum = $rownw["id"];
-		$znederlands = $rownw["Nederlands"];
-		echo '<option value="'.$znum.'">'.$znederlands.'</option>';
-	}
-	echo '</select>';
-	echo '<br> Verhouding: <input type="text" name="verhouding">';
-	echo '<input type="submit" value="verhouding invoeren" name="but">';
-	echo '</form>';
-	}
+
 
 
 }		

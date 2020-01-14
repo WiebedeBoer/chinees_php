@@ -8,6 +8,7 @@ include("includes/inc_head.php");
 <BODY>
 <div class="body">
 <div id="main">
+<a href="index.php">terug naar home</a>
 <?php
 if (isset($_POST["username"]) && isset($_POST["password"])){
 	//CHECK USERNAME
@@ -49,13 +50,13 @@ else {
 	
 }
 else {
-echo '<form method="POST" action="register.php">
+echo '<h1>Registratie</h1><div class="fm"><form method="POST" action="register.php">
 <table class="inlog">
 <tr><td class="inl">Gebruikersnaam: </td><td class="inl"><input type="text" size="20" maxlength="45" name="username" /></td></tr>
 <tr><td class="inl">Wachtwoord: </td><td class="inl"><input type="password" size="20" maxlength="20" name="password" /></td></tr>
-<tr><td class="inl">&nbsp;</td><td class="inl"><input type="submit" value="login" /></td></tr>
+<tr><td class="inl">&nbsp;</td><td class="inl"><input type="submit" value="registreer" /></td></tr>
 </table>
-</form>';
+</form></div>';
 }
 ?>
 </div>

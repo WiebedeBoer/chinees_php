@@ -8,8 +8,8 @@ include("includes/inc_head.php");
 <BODY>
 <div class="body">
 <div id="main">
-<a href="login.php">login</a>
-<a href="register.php">registratie</a>
+<div class="mnb"><a href="login.php" class="mn">login</a></div>
+<div class="mnb"><a href="register.php" class="mn">registratie</a></div>
 </div>
 <div id="footer">
 <?php

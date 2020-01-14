@@ -69,6 +69,9 @@ else {
 	$wid->bind_result($nederlands, $engels, $pinjin, $werking, $tong, $pols, $contraindicaties, $indicaties);
 	$wid->fetch();
 	$wid->close();
+	
+		echo '<p><b><a href="aantekening.php?id='.$num.'&type=patentformule">Aantekeningen</a></b></p>';
+	
 	echo '<form method="POST" action="patentformules.php?id='.$num.'"><div class="invul">
 	<div class="inl">Nederlands: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="nederlands">'.$nederlands.'</TEXTAREA></WRAP></div>
 	<div class="inl">Engels: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="engels">'.$engels.'</TEXTAREA></WRAP></div>
@@ -80,6 +83,8 @@ else {
 	<div class="inl">Indicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="indicaties">'.$indicaties.'</TEXTAREA></WRAP></div>
 	<div class="sbm"><input type="submit" value="update" class="but"></div>
 	</div></form>';
+	
+	
 	
 	//verhoudingen verwijderen
 	$wcfquery = "SELECT COUNT(ID) AS idc FROM PatentEnKruiden WHERE Patentformule =?";	

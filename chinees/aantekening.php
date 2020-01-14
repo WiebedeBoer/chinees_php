@@ -16,6 +16,14 @@ $userid = $_COOKIE['person'];
 if ($connected ==1){
 	echo '<p><a href="hoofdmenu.php">hoofdmenu</a></p>';
 	
+	$uquery = "SELECT Type FROM Users WHERE Username = ?";
+$uid = $conn->prepare($uquery);
+$uid->bind_param('s', $user);
+$uid->execute();
+$uid->bind_result($usertype);
+$uid->fetch();
+$uid->close();
+	
 if (isset($_GET["id"]) && isset($_GET["type"])){
 	if (filter_var($_GET["id"], FILTER_VALIDATE_INT)){
 	$num = $_GET["id"];

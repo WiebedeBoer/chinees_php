@@ -44,6 +44,8 @@ else {
 	$wid->bind_result($engels, $latijn, $pinjin, $klasse, $thermodynamisch, $meridiaan, $qi, $werking, $indicaties, $dosering);
 	$wid->fetch();
 	$wid->close();
+	
+		echo '<p><b><a href="aantekening.php?id='.$num.'&type=chineeskruid">Aantekeningen</a></b></p>';
  
 	echo '<form method="POST" action="chinesekruiden.php?id='.$num.'"><div class="invul">
 	<div class="inl">Engels: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="engels">'.$engels.'</TEXTAREA></WRAP></div>

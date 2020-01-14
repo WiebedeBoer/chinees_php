@@ -20,13 +20,13 @@ echo '<p class="beh"><a href="beheer.php">Ga door</a> naar object</p>';
 else {
 	*/
 echo '<h1>Login</h1>
-<form method="POST" action="portal.php">
+<div class="fm"><form method="POST" action="portal.php">
 <table class="inlog">
 <tr><td class="inl">Gebruikersnaam: </td><td class="inl"><input type="text" size="20" maxlength="20" name="username" /></td></tr>
 <tr><td class="inl">Wachtwoord: </td><td class="inl"><input type="password" size="20" maxlength="20" name="password" /></td></tr>
 <tr><td class="inl">&nbsp;</td><td class="inl"><input type="submit" value="login" /></td></tr>
 </table>
-</form>';
+</form><div>';
 /*
 }
 }

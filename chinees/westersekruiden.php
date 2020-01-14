@@ -52,6 +52,8 @@ else {
 	$wid->bind_result($new_nederlands, $new_latijn, $new_familie, $new_inhoudsstoffen, $new_toepassingen, $new_eigenschappen, $new_actie, $new_gebruik, $new_contraindicaties, $new_smaak, $new_dosering, $new_thermodynamisch, $new_gebruiktedelen, $new_orgaan);
 	$wid->fetch();
 	$wid->close();
+	
+	echo '<p><b><a href="aantekening.php?id='.$num.'&type=westerskruid">Aantekeningen</a></b></p>';
 
 	echo '<form method="POST" action="westersekruiden.php">
 <div class="invul">
@@ -69,7 +71,7 @@ else {
 <div class="inl">Thermodynamisch: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="thermodynamisch">'.$new_thermodynamisch.'</TEXTAREA></WRAP></div>
 <div class="inl">Gebruikte Delen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="gebruiktedelen">'.$new_gebruiktedelen.'</TEXTAREA></WRAP></div>
 <div class="inl">Orgaan: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="orgaan">'.$new_orgaan.'</TEXTAREA></WRAP></div>
-<div class="inp"><input type="submit" value="invoeren" name="but"></div>
+<div class="inp"><input type="submit" value="update" name="but"></div>
 </div>
 </form>';
 	

@@ -11,61 +11,127 @@ include("includes/inc_head.php");
 <?php
 include("connect.php");
 
-$userid = $_COOKIE['person'];
+
+
+//echo $userid;
+//echo $usertype;
 
 if ($connected ==1){
 	echo '<p><a href="hoofdmenu.php">hoofdmenu</a></p>';
 	
-	$uquery = "SELECT Type FROM Users WHERE Username = ?";
-$uid = $conn->prepare($uquery);
-$uid->bind_param('s', $user);
-$uid->execute();
-$uid->bind_result($usertype);
-$uid->fetch();
-$uid->close();
-	
 if (isset($_GET["id"]) && isset($_GET["type"])){
 	if (filter_var($_GET["id"], FILTER_VALIDATE_INT)){
 	$num = $_GET["id"];
-	$type = $get["type"];
+	$type = $_GET["type"];
 //update
-if(isset($_POST["update"]) && isset($_POST[""]) && isset($_POST[""]) && isset($_POST[""])) {
-	/*
-	$new_upd = $_POST["update"];
-	$upquery = "UPDATE  SET  =?, =? WHERE ID = ?";
-	$upid = $conn->prepare($upquery);
-	$upid->bind_param('ssi', $new_, $new_, $num);
-	$upid->execute();
-	$upid->close();
-	*/
+if(isset($_POST["update"])) {
+	$new_in = $_POST["update"];
+	if($type =="chineeskruid"){
+		$iquery = "UPDATE Chineesaantekeningen SET Aantekening =? WHERE ID =?";}
+	elseif ($type =="westerskruid"){
+		$iquery = "UPDATE Kruidenaantekeningen SET Aantekening =? WHERE ID =?";}
+	elseif ($type =="westersformule"){
+		$iquery = "UPDATE Formulesaantekeningen SET Aantekening =? WHERE ID =?";}
+	elseif ($type =="patentformule"){
+		$iquery = "UPDATE Patentaantekeningen SET Aantekening =? WHERE ID =?";}
+    $iid = $conn->prepare($iquery);
+    $iid->bind_param('si', $new_in, $num);
+    $iid->execute();
+    $iid->close();
 	echo '<p><a href="hoofdmenu.php">aagepast</a></p>';
 }
 //insert
 elseif (isset($_POST["insert"])) {
 	$new_in = $_POST["insert"];
 	if($type =="chineeskruid"){
-		$iquery = "INSERT INTO Chineesaantekeningen (Kruid, Aantekening) VALUES(?, ?)";}
+		$iquery = "INSERT INTO Chineesaantekeningen (Kruid, Aantekening, User) VALUES(?, ?, ?)";}
 	elseif ($type =="westerskruid"){
-		$iquery = "INSERT INTO Kruidenaantekeningen (Kruid, Aantekening) VALUES(?, ?)";}
+		$iquery = "INSERT INTO Kruidenaantekeningen (Kruid, Aantekening, User) VALUES(?, ?, ?)";}
 	elseif ($type =="westersformule"){
-		$iquery = "INSERT INTO Formulesaantekeningen (Kruid, Aantekening) VALUES(?, ?)";}
+		$iquery = "INSERT INTO Formulesaantekeningen (Kruid, Aantekening, User) VALUES(?, ?, ?)";}
 	elseif ($type =="patentformule"){
-		$iquery = "INSERT INTO Patentaantekeningen (Kruid, Aantekening) VALUES(?, ?)";}
+		$iquery = "INSERT INTO Patentaantekeningen (Kruid, Aantekening, User) VALUES(?, ?, ?)";}
     $iid = $conn->prepare($iquery);
-    $iid->bind_param('is', $num, $new_in);
+    $iid->bind_param('isi', $num, $new_in, $userid);
     $iid->execute();
     $iid->close();
-	echo '<p><a href="hoofdmenu.php">ingevoerd</a></p>';
+	echo '<p><a href="aantekening.php?id='.$num.'&type='.$type.'">ingevoerd</a></p>';
 }
 //fetch
 else {
 
+	//insert form
+	echo '<h2>Invoeren</h2>';
 	echo '<form method="POST" action="aantekening.php?id='.$num.'&type='.$type.'"><div class="invul">
 	<div class="inl">Aantekening: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="insert"></TEXTAREA></WRAP></div>
 		<div class="sbm"><input type="submit" value="invoeren" class="but"></div>
 	</div></form>';
 	
+	
+	
+	//updating display
+	if ($usertype =="admin"){
+			if($type =="chineeskruid"){
+		$cwquery = "SELECT COUNT(Aantekening) AS counting FROM Chineesaantekeningen WHERE Kruid ='$num'";}
+	elseif ($type =="westerskruid"){
+		$cwquery = "SELECT COUNT(Aantekening) AS counting FROM Kruidenaantekeningen WHERE Kruid ='$num'";}
+	elseif ($type =="westersformule"){
+		$cwquery = "SELECT COUNT(Aantekening) AS counting FROM Formulesaantekeningen WHERE Kruid ='$num'";}
+	elseif ($type =="patentformule"){
+		$cwquery = "SELECT COUNT(Aantekening) AS counting FROM Patentaantekeningen WHERE Patent ='$num'";}
+	else {
+		$cwquery = "SELECT COUNT(Aantekening) AS counting FROM Kruidenaantekeningen WHERE Kruid ='$num'";}
+	}
+	else {
+			if($type =="chineeskruid"){
+		$cwquery = "SELECT COUNT(Aantekening) AS counting FROM Chineesaantekeningen WHERE Kruid ='$num' AND User ='$userid'";}
+	elseif ($type =="westerskruid"){
+		$cwquery = "SELECT COUNT(Aantekening) AS counting FROM Kruidenaantekeningen WHERE Kruid ='$num' AND User ='$userid'";}
+	elseif ($type =="westersformule"){
+		$cwquery = "SELECT COUNT(Aantekening) AS counting FROM Formulesaantekeningen WHERE Kruid ='$num' AND User ='$userid'";}
+	elseif ($type =="patentformule"){
+		$cwquery = "SELECT COUNT(Aantekening) AS counting FROM Patentaantekeningen WHERE Patent ='$num' AND User ='$userid'";}
+	else {
+		$cwquery = "SELECT COUNT(Aantekening) AS counting FROM Kruidenaantekeningen WHERE Kruid ='$num' AND User ='$userid'";}
+	}
+	
+	
+
+	$cwresult = mysqli_query($conn, $cwquery);
+    $cw = mysqli_fetch_assoc($cwresult);
+	
+	echo $cw;
+	
+	if ($cw >=1){
+		echo '<h2>Wijzigen</h2>';
 		
+	if ($usertype =="admin"){
+			if($type =="chineeskruid"){
+		$wquery = "SELECT Aantekening FROM Chineesaantekeningen WHERE Kruid ='$num'";}
+	elseif ($type =="westerskruid"){
+		$wquery = "SELECT Aantekening FROM Kruidenaantekeningen WHERE Kruid ='$num'";}
+	elseif ($type =="westersformule"){
+		$wquery = "SELECT Aantekening FROM Formulesaantekeningen WHERE Kruid ='$num'";}
+	elseif ($type =="patentformule"){
+		$wquery = "SELECT Aantekening FROM Patentaantekeningen WHERE Patent ='$num'";}
+	else {
+		$wquery = "SELECT Aantekening FROM Kruidenaantekeningen WHERE Kruid ='$num'";}
+	}
+	else {
+			if($type =="chineeskruid"){
+		$wquery = "SELECT Aantekening FROM Chineesaantekeningen WHERE Kruid ='$num' AND User ='$userid'";}
+	elseif ($type =="westerskruid"){
+		$wquery = "SELECT Aantekening FROM Kruidenaantekeningen WHERE Kruid ='$num' AND User ='$userid'";}
+	elseif ($type =="westersformule"){
+		$wquery = "SELECT Aantekening FROM Formulesaantekeningen WHERE Kruid ='$num' AND User ='$userid'";}
+	elseif ($type =="patentformule"){
+		$wquery = "SELECT Aantekening FROM Patentaantekeningen WHERE Patent ='$num' AND User ='$userid'";}
+	else {
+		$wquery = "SELECT Aantekening FROM Kruidenaantekeningen WHERE Kruid ='$num' AND User ='$userid'";}
+	}	
+		
+		
+	/*
 	if($type =="chineeskruid"){
 		$wquery = "SELECT Aantekening FROM Chineesaantekeningen WHERE ID = ? AND WHERE User =?";}
 	elseif ($type =="westerskruid"){
@@ -74,28 +140,26 @@ else {
 		$wquery = "SELECT Aantekening FROM Formulesaantekeningen WHERE ID = ? AND WHERE User =?";}
 	elseif ($type =="patentformule"){
 		$wquery = "SELECT Aantekening FROM Patentaantekeningen WHERE ID = ? AND WHERE User =?";}
-	$wid = $conn->prepare($wquery);
-	$wid->bind_param('ii', $num, $userid);
-	$wid->execute();
-	$wid->bind_result($aantekening);
-	while ($wid->fetch())
+		*/
+	//$wid = $conn->prepare($wquery);
+	//$wid->bind_param('ii', $num, $userid);
+	//$wid->execute();
+	//$wid->bind_result($aantekening);
+	$result = mysqli_query($conn, $wquery);
+    while($rownw = mysqli_fetch_assoc($result))
 	{
-		echo '<form method="POST" action="aantekening.php"><div class="invul">
-		<div class="inl">: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="">'.$aantekening.'</TEXTAREA></WRAP></div>
+		echo '<form method="POST" action="aantekening.php?id='.$num.'&type='.$type.'"><div class="invul"><input type="hidden" value="'.$rownw["ID"].'" name="uid">
+		<div class="inl">Aantekening: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="update">'.$rownw["Aantekening"].'</TEXTAREA></WRAP></div>
 		<div class="sbm"><input type="submit" value="update" class="but"></div>
 		</div></form>';
 	}
-	$wid->close();
+	//$wid->close();
+	}
 	
 }
 	}		
 }
-/*
-else {
 
-		
-}
-*/
 
 	
 }

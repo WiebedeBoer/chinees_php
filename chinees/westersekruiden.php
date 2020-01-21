@@ -57,9 +57,9 @@ else {
 
 	echo '<form method="POST" action="westersekruiden.php">
 <div class="invul">
-<div class="inl">Nederlands: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="nederlands">'.$new_nederlands.'</TEXTAREA></WRAP></div>
-<div class="inl">Latijn: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="latijn">'.$new_latijn.'</TEXTAREA></WRAP></div>
-<div class="inl">Familie: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="familie">'.$new_familie.'</TEXTAREA></WRAP></div>
+<div class="inl">Nederlands: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="2" name="nederlands">'.$new_nederlands.'</TEXTAREA></WRAP></div>
+<div class="inl">Latijn: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="2" name="latijn">'.$new_latijn.'</TEXTAREA></WRAP></div>
+<div class="inl">Familie: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="2" name="familie">'.$new_familie.'</TEXTAREA></WRAP></div>
 <div class="inl">Inhoudsstoffen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="inhoudsstoffen">'.$new_inhoudsstoffen.'</TEXTAREA></WRAP></div>
 <div class="inl">Toepassingen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="toepassingen">'.$new_toepassingen.'</TEXTAREA></WRAP></div>
 <div class="inl">Eigenschappen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="eigenschappen">'.$new_eigenschappen.'</TEXTAREA></WRAP></div>
@@ -70,9 +70,10 @@ else {
 <div class="inl">Dosering: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="dosering">'.$new_dosering.'</TEXTAREA></WRAP></div>
 <div class="inl">Thermodynamisch: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="thermodynamisch">'.$new_thermodynamisch.'</TEXTAREA></WRAP></div>
 <div class="inl">Gebruikte Delen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="gebruiktedelen">'.$new_gebruiktedelen.'</TEXTAREA></WRAP></div>
-<div class="inl">Orgaan: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="orgaan">'.$new_orgaan.'</TEXTAREA></WRAP></div>
-<div class="inp"><input type="submit" value="update" name="but"></div>
-</div>
+<div class="inl">Orgaan: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="orgaan">'.$new_orgaan.'</TEXTAREA></WRAP></div>';
+if ($usertype =="admin"){
+echo '<div class="inp"><input type="submit" value="update" name="but" class="but"></div>';}
+echo '</div>
 </form>';
 	
 }
@@ -113,9 +114,9 @@ if (isset($_POST["nederlands"]) && isset($_POST["latijn"]) && isset($_POST["fami
 else {
 	echo '<form method="POST" action="westersekruiden.php">
 <div class="invul">
-<div class="inl">Nederlands: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="nederlands"></TEXTAREA></WRAP></div>
-<div class="inl">Latijn: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="latijn"></TEXTAREA></WRAP></div>
-<div class="inl">Familie: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="familie"></TEXTAREA></WRAP></div>
+<div class="inl">Nederlands: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="2" name="nederlands"></TEXTAREA></WRAP></div>
+<div class="inl">Latijn: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="2" name="latijn"></TEXTAREA></WRAP></div>
+<div class="inl">Familie: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="2" name="familie"></TEXTAREA></WRAP></div>
 <div class="inl">Inhoudsstoffen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="inhoudsstoffen"></TEXTAREA></WRAP></div>
 <div class="inl">Toepassingen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="toepassingen"></TEXTAREA></WRAP></div>
 <div class="inl">Eigenschappen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="eigenschappen"></TEXTAREA></WRAP></div>
@@ -127,7 +128,7 @@ else {
 <div class="inl">Thermodynamisch: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="thermodynamisch"></TEXTAREA></WRAP></div>
 <div class="inl">Gebruikte Delen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="gebruiktedelen"></TEXTAREA></WRAP></div>
 <div class="inl">Orgaan: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="orgaan"></TEXTAREA></WRAP></div>
-<div class="inp"><input type="submit" value="invoeren" name="but"></div>
+<div class="inp"><input type="submit" value="invoeren" name="but" class="but"></div>
 </div>
 </form>';
 }		

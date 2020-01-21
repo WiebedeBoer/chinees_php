@@ -41,9 +41,10 @@ else {
 	<div class="inl">Syndroom: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="syndroom">'.$syndroom.'</TEXTAREA></WRAP></div>
 	<div class="inl">Actie: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="actie">'.$actie.'</TEXTAREA></WRAP></div>
 	<div class="inl">Acupunctuurpunten: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="acupunctuurpunten">'.$acupunctuurpunten.'</TEXTAREA></WRAP></div>
-	<div class="inl">Opmerkingen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="opmerkingen">'.$opmerkingen.'</TEXTAREA></WRAP></div>
-	<div class="inp"><input type="submit" value="update" name="but"></div>
-	</div></form>';
+	<div class="inl">Opmerkingen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="opmerkingen">'.$opmerkingen.'</TEXTAREA></WRAP></div>';
+	if ($usertype =="admin"){
+	echo '<div class="inp"><input type="submit" value="update" name="but" class="but"></div>';}
+	echo '</div></form>';
 	
 }
 	}		
@@ -65,7 +66,7 @@ else {
 	<div class="inl">Actie: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="actie"></TEXTAREA></WRAP></div>
 	<div class="inl">Acupunctuurpunten: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="acupunctuurpunten"></TEXTAREA></WRAP></div>
 	<div class="inl">Opmerkingen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="opmerkingen"></TEXTAREA></WRAP></div>
-	<div class="inp"><input type="submit" value="invoeren" name="but"></div>
+	<div class="inp"><input type="submit" value="invoeren" name="but" class="but"></div>
 </div>
 </form>';
 }		

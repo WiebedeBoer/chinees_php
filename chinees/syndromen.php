@@ -32,6 +32,36 @@ if(isset($_POST["syndroom"]) && isset($_POST["symptoom"]) && isset($_POST["hoofd
 	$upid->bind_param('sssssssssi', $new_syndroom, $new_symptoom, $new_hoofdsymptoom, $new_tong, $new_pols, $new_etiologie, $new_pathologie, $new_voorlopers, $new_ontwikkelingen, $num);
 	$upid->execute();
 	$upid->close();
+		echo '<p><a href="syndromen.php?id='.$num.'">gewijzigd</a></p>';
+		
+}
+elseif (isset($_POST["westers"]) && isset($_POST["oosters"])){
+	$new_west = $_POST["westers"];
+	$new_oost = $_POST["oosters"];
+	if ($usertype =="admin"){
+		$iquery = "INSERT INTO Syndromen (Syndroom, Patentformule, Kruidformule) VALUES (?, ?, ?)";
+        $iid = $conn->prepare($iquery);
+        $iid->bind_param('iii', $num, $new_oost, $new_west);
+        $iid->execute();
+        $iid->close();
+	}
+	echo '<p><a href="syndromen.php?id='.$num.'">actie formule ingevoerd</a></p>';
+	
+	
+}
+elseif(isset($_POST["del"])){
+	$new_del = $_POST["del"];
+
+	if ($usertype =="admin"){
+		$iquery = "DELETE FROM Actieformules WHERE ID =?";
+        $iid = $conn->prepare($iquery);
+        $iid->bind_param('i', $new_del);
+        $iid->execute();
+        $iid->close();
+	}
+	echo '<p><a href="kruidenformules.php?id='.$num.'">actie formule verwijderd</a></p>';
+	
+	
 }
 //fetch
 else {
@@ -42,6 +72,7 @@ else {
 	$wid->bind_result($syndroom, $symptoom, $hoofdsymptoom, $tong, $pols, $etiologie, $pathologie, $voorlopers, $ontwikkelingen);
 	$wid->fetch();
 	$wid->close();
+	//display
 	echo '<form method="POST" action="syndromen.php?id='.$num.'"><div class="invul">
 	<div class="inl">Syndroom: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="syndroom">'.$syndroom.'</TEXTAREA></WRAP></div>
 	<div class="inl">Symptomen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="symptoom">'.$symptoom.'</TEXTAREA></WRAP></div>
@@ -52,8 +83,75 @@ else {
 	<div class="inl">Pathologie: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="pathologie">'.$pathologie.'</TEXTAREA></WRAP></div>
 	<div class="inl">Voorlopers: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="voorlopers">'.$voorlopers.'</TEXTAREA></WRAP></div>
 	<div class="inl">Ontwikkelingen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="ontwikkelingen">'.$ontwikkelingen.'</TEXTAREA></WRAP></div>
-	<div class="inp"><input type="submit" value="update" name="but"></div>
+	<div class="inp"><input type="submit" value="update" name="but" class="but"></div>
 	</div></form>';
+	
+	//actieformules invoeren
+	$wcoquery = "SELECT COUNT(ID) AS idc FROM Kruidenformules";	
+	$wcoid = $conn->prepare($wcoquery);
+	$wcoid->execute();
+	$wcoid->bind_result($idc);
+	
+	if ($idc >=1){
+echo '<form method="post" action="syndromen.php?id='.$num.'">';
+//westers
+	echo '<select name="westers">';
+	$wquery = "SELECT ID, Naam FROM Kruidenformules";	
+	$wid = $conn->prepare($wquery);
+	$wid->execute();
+	while ($rownw = $wid->fetch())
+	{
+		$znum = $rownw["id"];
+		$znaam = $rownw["Naam"];
+		echo '<option value="'.$znum.'">'.$znaam.'</option>';
+	}
+	echo '</select>';
+	$wid->close();
+//oosters
+	echo '<select name="oosters">';
+	$wkquery = "SELECT ID, Nederlands FROM Patentformules";	
+	$wkid = $conn->prepare($wkquery);
+	$wkid->execute();
+	while ($rownwk = $wkid->fetch())
+	{
+		$onum = $rownwk["id"];
+		$onederlands = $rownwk["Naam"];
+		echo '<option value="'.$onum.'">'.$onederlands.'</option>';
+	}
+	echo '</select>';
+	$wkid->close();
+//button
+if ($usertype =="admin"){
+echo '<input type="submit" value="actie invoeren" name="but" class="but">';}
+	echo '</form>';
+	}
+	
+	//actieformules display
+	$wcfquery = "SELECT COUNT(ID) AS idc FROM Actieformules WHERE Syndroom =?";	
+	$wcfid = $conn->prepare($wcfquery);
+	$wcfid->bind_param('i', $num);
+	$wcfid->execute();
+	$wcfid->bind_result($idcf);	
+	if ($idcf >=1){
+	echo '<select name="select">';
+	$wfquery = "SELECT ID, Patentformules.Nederlands AS patent, Kruidenformules.Nederlands AS kruid FROM Actieformules WHERE Kruidenformules.ID = Actieformules.Kruidenformule AND Patentformules.ID = Actieformules.Patentformule AND Actieformules.Syndroom =?";	
+	$wfid = $conn->prepare($wfquery);
+	$wfid->execute();
+	while ($rownw = $wfid->fetch())
+	{
+		echo '<form method="post" action="syndromen.php?id='.$num.'">';
+		$zfnum = $rownwf["ID"];
+		$zfpatent = $rownwf["patent"];
+		$zfkruid = $rownwf["kruid"];
+		echo $zfpatent.' '. $zfkruid.' <b><a href="aantekening.php?id='.$num.'&type=syndroom">Aantekeningen</a></b>';
+		echo '<input type="hidden" value="'.$zfnum.'" name="del"><br>';
+		if ($usertype =="admin"){
+		echo '<input type="submit" value="verhouding verwijderen" name="but">';}
+		echo '</form><br><br>';
+	}
+	echo '<br> Verhouding: <input type="text" name="verhouding">';
+	}	
+	
 	
 }
 	}		
@@ -96,7 +194,7 @@ else {
 	<div class="inl">Pathologie: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="pathologie"></TEXTAREA></WRAP></div>
 	<div class="inl">Voorlopers: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="voorlopers"></TEXTAREA></WRAP></div>
 	<div class="inl">Ontwikkelingen: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="ontwikkelingen"></TEXTAREA></WRAP></div>
-	<div class="inp"><input type="submit" value="invoeren" name="but"></div>
+	<div class="inp"><input type="submit" value="invoeren" name="but" class="but"></div>
 </div>
 </form>';
 

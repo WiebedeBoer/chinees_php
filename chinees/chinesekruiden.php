@@ -48,18 +48,19 @@ else {
 		echo '<p><b><a href="aantekening.php?id='.$num.'&type=chineeskruid">Aantekeningen</a></b></p>';
  
 	echo '<form method="POST" action="chinesekruiden.php?id='.$num.'"><div class="invul">
-	<div class="inl">Engels: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="engels">'.$engels.'</TEXTAREA></WRAP></div>
-	<div class="inl">Latijn: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="latijn">'.$latijn.'</TEXTAREA></WRAP></div>
-	<div class="inl">Pinjin: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="pinjin">'.$pinjin.'</TEXTAREA></WRAP></div>
+	<div class="inl">Engels: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="2" name="engels">'.$engels.'</TEXTAREA></WRAP></div>
+	<div class="inl">Latijn: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="2" name="latijn">'.$latijn.'</TEXTAREA></WRAP></div>
+	<div class="inl">Pinjin: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="2" name="pinjin">'.$pinjin.'</TEXTAREA></WRAP></div>
 	<div class="inl">Klasse: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="klasse">'.$klasse.'</TEXTAREA></WRAP></div>
 	<div class="inl">Thermodynamisch: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="thermodynamisch">'.$thermodynamisch.'</TEXTAREA></WRAP></div>
 	<div class="inl">Meridiaan: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="meridiaan">'.$meridiaan.'</TEXTAREA></WRAP></div>
 	<div class="inl">Qi: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="qi">'.$qi.'</TEXTAREA></WRAP></div>
 	<div class="inl">Werking: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="werking">'.$werking.'</TEXTAREA></WRAP></div>
 	<div class="inl">Indicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="indicaties">'.$indicaties.'</TEXTAREA></WRAP></div>
-	<div class="inl">Dosering: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="dosering">'.$dosering.'</TEXTAREA></WRAP></div>
-	<div class="inp"><input type="submit" value="update" name="but"></div>
-	</div></form>';
+	<div class="inl">Dosering: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="dosering">'.$dosering.'</TEXTAREA></WRAP></div>';
+	if ($usertype =="admin"){
+	echo '<div class="inp"><input type="submit" value="update" name="but" class="but"></div>';}
+	echo '</div></form>';
 	
 }
 	}		
@@ -83,9 +84,9 @@ if(isset($_POST["engels"]) && isset($_POST["latijn"]) && isset($_POST["pinjin"])
 else {
 	echo '<form method="POST" action="chinesekruiden.php">
 <div class="invul">
-	<div class="inl">Engels: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="engels"></TEXTAREA></WRAP></div>
-	<div class="inl">Latijn: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="latijn"></TEXTAREA></WRAP></div>
-	<div class="inl">Pinjin: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="pinjin"></TEXTAREA></WRAP></div>
+	<div class="inl">Engels: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="2" name="engels"></TEXTAREA></WRAP></div>
+	<div class="inl">Latijn: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="2" name="latijn"></TEXTAREA></WRAP></div>
+	<div class="inl">Pinjin: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="2" name="pinjin"></TEXTAREA></WRAP></div>
 	<div class="inl">Klasse: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="klasse"></TEXTAREA></WRAP></div>
 	<div class="inl">Thermodynamisch: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="thermodynamisch"></TEXTAREA></WRAP></div>
 	<div class="inl">Meridiaan: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="meridiaan"></TEXTAREA></WRAP></div>
@@ -93,7 +94,7 @@ else {
 	<div class="inl">Werking: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="werking"></TEXTAREA></WRAP></div>
 	<div class="inl">Indicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="indicaties"></TEXTAREA></WRAP></div>
 	<div class="inl">Dosering: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="dosering"></TEXTAREA></WRAP></div>
-	<div class="inp"><input type="submit" value="invoeren" name="but"></div>
+	<div class="inp"><input type="submit" value="invoeren" name="but" class="but"></div>
 </div>
 </form>';
 }		

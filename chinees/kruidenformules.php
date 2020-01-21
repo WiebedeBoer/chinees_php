@@ -14,6 +14,7 @@ if ($connected ==1){
 	
 	echo '<p><a href="hoofdmenu.php">hoofdmenu</a></p>';
 if (isset($_GET["id"])){
+	/*
 	if (filter_var($_GET["id"], FILTER_VALIDATE_INT)){
 	$num = $_GET["id"];
 //update
@@ -75,16 +76,17 @@ else {
 	$wid->close();
 	
 	echo '<form method="POST" action="kruidenformules.php?id='.$num.'"><div class="invul">
-<div class="inl">Naam: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="naam">'.$new_naam.'</TEXTAREA></WRAP></div>
+<div class="inl">Naam: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="2" name="naam">'.$new_naam.'</TEXTAREA></WRAP></div>
 <div class="inl">Indicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="indicaties">'.$new_indicaties.'</TEXTAREA></WRAP></div>
 <div class="inl">Werking: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="werking">'.$new_werking.'</TEXTAREA></WRAP></div>
 <div class="inl">Klasse: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="klasse">'.$new_klasse.'</TEXTAREA></WRAP></div>
 <div class="inl">Smaak: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="smaak">'.$new_smaak.'</TEXTAREA></WRAP></div>
 <div class="inl">Meridiaan: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="meridiaan">'.$new_meridiaan.'</TEXTAREA></WRAP></div>
 <div class="inl">Qi: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="qi">'.$new_qi.'</TEXTAREA></WRAP></div>
-<div class="inl">Contraindicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="contraindicaties">'.$new_contraindicaties.'</TEXTAREA></WRAP></div>
-	<div class="inp"><input type="submit" value="update" name="but"></div>
-	</div></form>';
+<div class="inl">Contraindicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="contraindicaties">'.$new_contraindicaties.'</TEXTAREA></WRAP></div>';
+if ($usertype =="admin"){
+echo '<div class="inp"><input type="submit" value="update" name="but"></div>';}
+echo '</div></form>';
 	
 	//verhoudingen verwijderen
 	$wcfquery = "SELECT COUNT(ID) AS idc FROM FormulesEnKruiden WHERE Kruidenformule =?";	
@@ -131,13 +133,14 @@ echo '<form method="post" action="kruidenformules.php?id='.$num.'">';
 	}
 	echo '</select>';
 	echo '<br> Verhouding: <input type="text" name="verhouding">';
-	echo '<input type="submit" value="verhouding invoeren" name="but">';
+	echo '<input type="submit" value="verhouding invoeren" name="but" class="but">';
 	echo '</form>';
 	}
 	
 	
 }
-	}		
+	}	
+*/	
 }
 else {
 //insert
@@ -164,7 +167,7 @@ if (isset($_POST["naam"]) && isset($_POST["indicaties"]) && isset($_POST["werkin
 else {
 	echo '<form method="POST" action="kruidenformules.php">
 <div class="invul">
-<div class="inl">Naam: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="naam"></TEXTAREA></WRAP></div>
+<div class="inl">Naam: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="2" name="naam"></TEXTAREA></WRAP></div>
 <div class="inl">Indicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="indicaties"></TEXTAREA></WRAP></div>
 <div class="inl">Werking: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="werking"></TEXTAREA></WRAP></div>
 <div class="inl">Klasse: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="klasse"></TEXTAREA></WRAP></div>
@@ -172,7 +175,7 @@ else {
 <div class="inl">Meridiaan: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="meridiaan"></TEXTAREA></WRAP></div>
 <div class="inl">Qi: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="qi"></TEXTAREA></WRAP></div>
 <div class="inl">Contraindicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="contraindicaties"></TEXTAREA></WRAP></div>
-<div class="inp"><input type="submit" value="invoeren" name="but"></div>
+<div class="inp"><input type="submit" value="invoeren" name="but" class="but"></div>
 </div>
 </form>';
 

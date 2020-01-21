@@ -12,7 +12,7 @@ include("includes/inc_head.php");
 include("connect.php");
 if ($connected ==1){
 	echo '<p><a href="hoofdmenu.php">hoofdmenu</a></p>';
-	echo '<p>* voor joker</p>';
+	
 include("zoek.php");
 	
 if(isset($_POST["zoekterm"]) && isset($_POST["soort"])) {
@@ -32,25 +32,33 @@ elseif ($soort =="latijn"){
 elseif ($soort =="thermo"){
 	$ncquery = "SELECT COUNT(ID) AS counter FROM Kruiden";}
 elseif ($soort =="indicaties"){
-	$ncquery = "SELECT COUNT(ID) AS counter FROM Kruidenformules WHERE Indicaties=?";}
+	$ncquery = "SELECT COUNT(ID) AS counter FROM Kruidenformules";}
 elseif ($soort =="naam"){
-	$ncquery = "SELECT COUNT(ID) AS counter FROM Kruidenformules WHERE Naam=?";}
+	$ncquery = "SELECT COUNT(ID) AS counter FROM Kruidenformules";}
 elseif ($soort =="formule"){
-	$ncquery = "SELECT COUNT(FormulesEnKruiden.ID) as counter FROM Kruidenformules, FormulesEnKruiden, Kruiden WHERE Kruidenformules.ID=FormulesEnKruiden.IDKruidenformule AND FormulesEnKruiden.IDKruiden=Kruiden.ID AND Kruiden.Nederlands=?";}
+	$ncquery = "SELECT COUNT(FormulesEnKruiden.ID) as counter FROM Kruidenformules, FormulesEnKruiden, Kruiden WHERE Kruidenformules.ID=FormulesEnKruiden.IDKruidenformule AND FormulesEnKruiden.IDKruiden=Kruiden.ID";}
 elseif ($soort =="patent"){
-	$ncquery = "SELECT COUNT(ID) AS counter FROM Patentformules WHERE Nederlands=?";}
+	$ncquery = "SELECT COUNT(ID) AS counter FROM Patentformules";}
 elseif ($soort =="engels"){
-	$ncquery = "SELECT COUNT(ID) AS counter FROM Patentformules WHERE Engels=?";}
+	$ncquery = "SELECT COUNT(ID) AS counter FROM Patentformules";}
 elseif ($soort =="pinjin"){
-	$ncquery = "SELECT COUNT(ID) AS counter FROM Patentformules WHERE Pinjin=?";}
+	$ncquery = "SELECT COUNT(ID) AS counter FROM Patentformules";}
 elseif ($soort =="syndroom"){
-	$ncquery = "SELECT COUNT(ID) AS counter FROM Syndromen WHERE Syndroom=?";}
+	$ncquery = "SELECT COUNT(ID) AS counter FROM Syndromen";}
 elseif ($soort =="symptoom"){
-	$ncquery = "SELECT COUNT(ID) AS counter FROM Syndromen WHERE Pols=? OR Tong=?";}
+	$ncquery = "SELECT COUNT(ID) AS counter FROM Syndromen";}
 elseif ($soort =="patentsymptoom"){
-	$ncquery = "SELECT COUNT(ID) AS counter FROM Syndromen WHERE Pols=search OR Tong=?";}
+	$ncquery = "SELECT COUNT(ID) AS counter FROM Syndromen";}
 else {
-	$ncquery = "SELECT COUNT(ID) AS counter FROM Kruiden WHERE Nederlands=?";}
+	$ncquery = "SELECT COUNT(ID) AS counter FROM Kruiden";}
+
+/*
+include ("inserter.php");
+$mycount = new Counter();
+$mycount->set_query($ncquery);
+$nwcheck = $mycount->give_count();
+*/
+
 
 $ncid = $conn->prepare($ncquery);
 $ncid->bind_param('s', $num);
@@ -58,6 +66,7 @@ $ncid->execute();
 $ncid->bind_result($nwcheck);
 $ncid->fetch();
 $ncid->close();
+
 
 //als resultaat
 if ($nwcheck >=1){
@@ -73,7 +82,7 @@ elseif ($soort =="indicaties"){
 elseif ($soort =="naam"){
 	$wquery = "SELECT ID, Naam FROM Kruidenformules";}
 elseif ($soort =="formule"){
-	$wquery = "SELECT FormulesEnKruiden.ID AS ID, Kruidenformules.Naam AS Naam FROM Kruidenformules, FormulesEnKruiden, Kruiden WHERE Kruidenformules.ID=FormulesEnKruiden.IDKruidenformule AND FormulesEnKruiden.IDKruiden=Kruiden.ID AND Kruiden.Nederlands=?";}
+	$wquery = "SELECT FormulesEnKruiden.ID AS ID, Kruidenformules.Naam AS Naam FROM Kruidenformules, FormulesEnKruiden, Kruiden WHERE Kruidenformules.ID=FormulesEnKruiden.IDKruidenformule AND FormulesEnKruiden.IDKruiden=Kruiden.ID";}
 elseif ($soort =="patent"){
 	$wquery = "SELECT ID, Nederlands FROM Patentformules";}
 elseif ($soort =="engels"){
@@ -85,7 +94,7 @@ elseif ($soort =="syndroom"){
 elseif ($soort =="symptoom"){
 	$wquery = "SELECT ID, Pols FROM Syndromen";}
 elseif ($soort =="patentsymptoom"){
-	$wquery = "SELECT Actieformules.ID AS ID, Patentformules.Nederlands AS Nederlands FROM Syndromen, Actiesformules, Patentformules WHERE Syndromen.ID=Actieformules.Syndroom AND Actieformules.Patentformule=Patentformules.ID AND Syndromen.Hoofdsymptoom =?";}
+	$wquery = "SELECT Actieformules.ID AS ID, Patentformules.Nederlands AS Nederlands FROM Syndromen, Actiesformules, Patentformules WHERE Syndromen.ID=Actieformules.Syndroom AND Actieformules.Patentformule=Patentformules.ID";}
 else {
 	$wquery = "SELECT ID, Nederlands FROM Kruiden";}
 	
@@ -139,8 +148,7 @@ $result = mysqli_query($conn, $wquery);
 
 echo '<div class="item">';
 //display
-echo $znum.' '.$znaam.'<br> Update: <br>'; 
-//<input type="submit" value="update" name="but">';
+echo $znum.' '.$znaam.'<br> Update: '; 
 //update
 if ($soort =="nederlands"){
 	echo '<a href="westersekruiden.php?id='.$znum.'">'.$znaam.'</a>';}
@@ -169,21 +177,14 @@ elseif ($soort =="patentsymptoom"){
 else {
 	echo '<a href="westersekruiden.php?id='.$znum.'">'.$znaam.'</a>';}
 //verwijder
-echo '<form method="POST" action="overzicht.php">
+echo '<br><form method="POST" action="overzicht.php">
 <input type="hidden" name="delete" value="'.$znum.'"><input type="hidden" value="'.$soort.'" name="type"><input type="hidden" value="'.$num.'" name="term">
-<input type="submit" value="verwijder" name="but"></form>';
+<input type="submit" value="verwijder" name="but" class="but"></form>';
 
   
 echo '</div>';
 	}
 	$wid->close();
-/*
-$result_pagg = $conn->query($lquery);
-while ($rownw = $result_pagg->fetch_assoc())
-  {
-
-  }
-  */
 
 }
 else {
@@ -338,8 +339,8 @@ echo '<div class="item">';
 //display
 //echo $znum.' '.$znaam; 
 //<input type="submit" value="update" name="but">';
-echo $znum.' '.$znaam.'<br> Update: <br>'; 
-echo '<br>';
+echo $znum.' '.$znaam.'<br> Update: '; 
+//echo '<br>';
 //update
 if ($soort =="nederlands"){
 	echo '<a href="westersekruiden.php?id='.$znum.'">'.$znaam.'</a>';}
@@ -368,7 +369,7 @@ elseif ($soort =="patentsymptoom"){
 else {
 	echo '<a href="westersekruiden.php?id='.$znum.'">'.$znaam.'</a>';}
 //verwijder
-echo '<form method="POST" action="overzicht.php">
+echo '<br><form method="POST" action="overzicht.php">
 <br><input type="hidden" name="delete" value="'.$znum.'"><input type="hidden" value="'.$soort.'" name="type"><input type="hidden" value="'.$num.'" name="term">
 <input type="submit" value="verwijder" name="but"></form>';
 

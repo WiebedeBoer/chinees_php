@@ -34,6 +34,8 @@ if(isset($_POST["update"])) {
 		$iquery = "UPDATE Formulesaantekeningen SET Aantekening =? WHERE ID =?";}
 	elseif ($type =="patentformule"){
 		$iquery = "UPDATE Patentaantekeningen SET Aantekening =? WHERE ID =?";}
+	elseif ($type =="syndroom"){
+		$iquery = "UPDATE Actiesaantekeningen SET Aantekening =? WHERE ID =?";}
     $iid = $conn->prepare($iquery);
     $iid->bind_param('si', $new_in, $num);
     $iid->execute();
@@ -50,7 +52,9 @@ elseif (isset($_POST["insert"])) {
 	elseif ($type =="westersformule"){
 		$iquery = "INSERT INTO Formulesaantekeningen (Kruid, Aantekening, User) VALUES(?, ?, ?)";}
 	elseif ($type =="patentformule"){
-		$iquery = "INSERT INTO Patentaantekeningen (Kruid, Aantekening, User) VALUES(?, ?, ?)";}
+		$iquery = "INSERT INTO Patentaantekeningen (Patent, Aantekening, User) VALUES(?, ?, ?)";}
+	elseif ($type =="syndroom"){
+		$iquery = "INSERT INTO Actiesaantekeningen (Actie, Aantekening, User) VALUES(?, ?, ?)";}
     $iid = $conn->prepare($iquery);
     $iid->bind_param('isi', $num, $new_in, $userid);
     $iid->execute();
@@ -79,6 +83,8 @@ else {
 		$cwquery = "SELECT COUNT(Aantekening) AS counting FROM Formulesaantekeningen WHERE Kruid ='$num'";}
 	elseif ($type =="patentformule"){
 		$cwquery = "SELECT COUNT(Aantekening) AS counting FROM Patentaantekeningen WHERE Patent ='$num'";}
+	elseif ($type =="syndroom"){
+		$cwquery = "SELECT COUNT(Aantekening) AS counting FROM Actiesaantekeningen WHERE Actie ='$num'";}
 	else {
 		$cwquery = "SELECT COUNT(Aantekening) AS counting FROM Kruidenaantekeningen WHERE Kruid ='$num'";}
 	}
@@ -91,6 +97,8 @@ else {
 		$cwquery = "SELECT COUNT(Aantekening) AS counting FROM Formulesaantekeningen WHERE Kruid ='$num' AND User ='$userid'";}
 	elseif ($type =="patentformule"){
 		$cwquery = "SELECT COUNT(Aantekening) AS counting FROM Patentaantekeningen WHERE Patent ='$num' AND User ='$userid'";}
+	elseif ($type =="syndroom"){
+		$cwquery = "SELECT COUNT(Aantekening) AS counting FROM Patentaantekeningen WHERE Actie ='$num' AND User ='$userid'";}
 	else {
 		$cwquery = "SELECT COUNT(Aantekening) AS counting FROM Kruidenaantekeningen WHERE Kruid ='$num' AND User ='$userid'";}
 	}
@@ -114,6 +122,8 @@ else {
 		$wquery = "SELECT Aantekening FROM Formulesaantekeningen WHERE Kruid ='$num'";}
 	elseif ($type =="patentformule"){
 		$wquery = "SELECT Aantekening FROM Patentaantekeningen WHERE Patent ='$num'";}
+	elseif ($type =="syndroom"){
+		$wquery = "SELECT Aantekening FROM Actiesaantekeningen WHERE Patent ='$num'";}
 	else {
 		$wquery = "SELECT Aantekening FROM Kruidenaantekeningen WHERE Kruid ='$num'";}
 	}
@@ -126,6 +136,8 @@ else {
 		$wquery = "SELECT Aantekening FROM Formulesaantekeningen WHERE Kruid ='$num' AND User ='$userid'";}
 	elseif ($type =="patentformule"){
 		$wquery = "SELECT Aantekening FROM Patentaantekeningen WHERE Patent ='$num' AND User ='$userid'";}
+	elseif ($type =="syndroom"){
+		$wquery = "SELECT Aantekening FROM Actiesaantekeningen WHERE Patent ='$num' AND User ='$userid'";}
 	else {
 		$wquery = "SELECT Aantekening FROM Kruidenaantekeningen WHERE Kruid ='$num' AND User ='$userid'";}
 	}	

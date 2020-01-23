@@ -184,7 +184,9 @@ echo '<br><form method="POST" action="overzicht.php">
   
 echo '</div>';
 	}
-	$wid->close();
+	$wid->close();	
+	
+		
 
 }
 else {
@@ -266,7 +268,7 @@ else {
 	*/
 	
 	
-	if ($soort =="nederlands"){
+if ($soort =="nederlands"){
 	$wquery = "SELECT ID, Nederlands FROM Kruiden WHERE Nederlands LIKE '$num'";}
 elseif ($soort =="latijn"){
 	$wquery = "SELECT ID, Latijns FROM Kruiden WHERE Latijns LIKE '$num'";}
@@ -384,6 +386,150 @@ while ($rownw = $result_pagg->fetch_assoc())
 
   }
   */
+  
+$sycquery = "SELECT COUNT(ID) AS counter FROM Synoniemen WHERE Naam LIKE '$num' OR Synoniem LIKE '$num'";
+$syc = $conn->prepare($sycquery);
+$syc->execute();
+$syc->bind_result($sycheck);
+$syc->fetch();
+$syc->close();	
+
+if ($sycheck >=1){
+	echo '<p>er zijn synoniemen</p>';
+	
+	$syquery = "SELECT Naam, Synoniem FROM Synoniemen WHERE Naam LIKE '$num' OR Synoniem LIKE '$num'";	
+	$syresult = mysqli_query($conn, $syquery);
+    while($rowsy = mysqli_fetch_assoc($syresult)){
+		
+		if ($rowsy["Naam"] == $num){
+			$alt_num = $rowsy["Synoniem"];
+		}
+		else {
+			$alt_num = $rowsy["Naam"];
+		}
+		
+		echo '<p>synoniem: '.$alt_num.'</p>';
+		
+		if ($soort =="nederlands"){
+	$awquery = "SELECT ID, Nederlands FROM Kruiden WHERE Nederlands LIKE '$alt_num'";}
+elseif ($soort =="latijn"){
+	$awquery = "SELECT ID, Latijns FROM Kruiden WHERE Latijns LIKE '$alt_num'";}
+elseif ($soort =="thermo"){
+	$awquery = "SELECT ID, Thermodynamisch FROM Kruiden WHERE Thermodynamisch LIKE '$alt_num'";}
+elseif ($soort =="indicaties"){
+	$awquery = "SELECT ID, Indicaties FROM Kruidenformules WHERE Indicaties LIKE '$alt_num'";}
+elseif ($soort =="naam"){
+	$awquery = "SELECT ID, Naam FROM Kruidenformules WHERE Naam LIKE '$alt_num'";}
+elseif ($soort =="formule"){
+	$awquery = "SELECT FormulesEnKruiden.ID AS ID, Kruidenformules.Naam AS Naam FROM Kruidenformules, FormulesEnKruiden, Kruiden WHERE Kruidenformules.ID=FormulesEnKruiden.IDKruidenformule AND FormulesEnKruiden.IDKruiden=Kruiden.ID AND Kruiden.Nederlands='$alt_num'";}
+elseif ($soort =="patent"){
+	$awquery = "SELECT ID, Nederlands FROM Patentformules WHERE Nederlands LIKE '$alt_num'";}
+elseif ($soort =="engels"){
+	$awquery = "SELECT ID, Engels FROM Patentformules WHERE Engels LIKE '$alt_num'";}
+elseif ($soort =="pinjin"){
+	$awquery = "SELECT ID, Pinjin FROM Patentformules WHERE Pinjin LIKE '$alt_num'";}
+elseif ($soort =="syndroom"){
+	$awquery = "SELECT ID, Syndroom FROM Syndromen WHERE Syndroom LIKE '$alt_num'";}
+elseif ($soort =="symptoom"){
+	$wquery = "SELECT ID, Pols FROM Syndromen WHERE Pols LIKE '$alt_num' OR Tong LIKE '$alt_num'";}
+elseif ($soort =="patentsymptoom"){
+	$awquery = "SELECT Actieformules.ID AS ID, Patentformules.Nederlands AS Nederlands FROM Syndromen, Actiesformules, Patentformules WHERE Syndromen.ID=Actieformules.Syndroom AND Actieformules.Patentformule=Patentformules.ID AND Syndromen.Hoofdsymptoom ='$alt_num'";}
+else {
+	$awquery = "SELECT ID, Nederlands FROM Kruiden WHERE Nederlands LIKE '$alt_num'";}
+	
+	
+	$aresult = mysqli_query($conn, $awquery);
+    while($rowaw = mysqli_fetch_assoc($aresult))
+	
+	/*
+	$wid = $conn->prepare($wquery);
+	$wid->bind_param('s', $num);
+	$wid->execute();
+	$res = $wid->get_result();
+	while ($rownw = $res->fetch())
+		*/
+	//while ($rownw = $wid->mysqli_fetch_assoc())
+	{
+		//echo $rownw;
+		$znum = $rowaw["ID"];
+		if ($soort =="nederlands"){
+			$znaam = $rowaw["Nederlands"];}
+		elseif ($soort =="latijn"){
+			$znaam = $rowaw["Latijns"];}
+		elseif ($soort =="thermo"){
+			$znaam = $rowaw["Thermodynamisch"];}
+		elseif ($soort =="indicaties"){
+			$znaam = $rowaw["Indicaties"];}
+		elseif ($soort =="naam"){
+			$znaam = $rowaw["Naam"];}
+		elseif ($soort =="formule"){
+			$znaam = $rowaw["Naam"];}
+		elseif ($soort =="patent"){
+			$znaam = $rowaw["Nederlands"];}	
+		elseif ($soort =="engels"){
+			$znaam = $rowaw["Engels"];}
+		elseif ($soort =="pinjin"){
+			$znaam = $rowaw["Pinjin"];}
+		elseif ($soort =="syndroom"){
+			$znaam = $rowaw["Syndroom"];}	
+		elseif ($soort =="symptoom"){
+			$znaam = $rowaw["Pols"];}
+		elseif ($soort =="patentsymptoom"){
+			$znaam = $rowaw["Nederlands"];}
+		else {
+			$znaam = $rowaw["Nederlands"];}				
+
+echo '<div class="item">';
+//display
+//echo $znum.' '.$znaam; 
+//<input type="submit" value="update" name="but">';
+echo $znum.' '.$znaam.'<br> Update: '; 
+//echo '<br>';
+//update
+if ($soort =="nederlands"){
+	echo '<a href="westersekruiden.php?id='.$znum.'">'.$znaam.'</a>';}
+elseif ($soort =="latijn"){
+	echo '<a href="westersekruiden.php?id='.$znum.'">'.$znaam.'</a>';}
+elseif ($soort =="thermo"){
+	echo '<a href="westersekruiden.php?id='.$znum.'">'.$znaam.'</a>';}
+elseif ($soort =="indicaties"){
+	echo '<a href="kruidenformules.php?id='.$znum.'">'.$znaam.'</a>';}
+elseif ($soort =="naam"){
+	echo '<a href="kruidenformules.php?id='.$znum.'">'.$znaam.'</a>';}
+elseif ($soort =="formule"){
+	echo '<a href="kruidenformules.php?id='.$znum.'">'.$znaam.'</a>';}
+elseif ($soort =="patent"){
+	echo '<a href="patentformules.php?id='.$znum.'">'.$znaam.'</a>';}
+elseif ($soort =="engels"){
+	echo '<a href="patentformules.php?id='.$znum.'">'.$znaam.'</a>';}
+elseif ($soort =="pinjin"){
+	echo '<a href="patentformules.php?id='.$znum.'">'.$znaam.'</a>';}
+elseif ($soort =="syndroom"){
+	echo '<a href="syndromen.php?id='.$znum.'">'.$znaam.'</a>';}
+elseif ($soort =="symptoom"){
+	echo '<a href="syndromen.php?id='.$znum.'">'.$znaam.'</a>';}
+elseif ($soort =="patentsymptoom"){
+	echo '<a href="patentformules.php?id='.$znum.'">'.$znaam.'</a>';}
+else {
+	echo '<a href="westersekruiden.php?id='.$znum.'">'.$znaam.'</a>';}
+//verwijder
+echo '<br><form method="POST" action="overzicht.php">
+<br><input type="hidden" name="delete" value="'.$znum.'"><input type="hidden" value="'.$soort.'" name="type"><input type="hidden" value="'.$alt_num.'" name="term">
+<input type="submit" value="verwijder" name="but"></form>';
+
+  
+echo '</div>';
+	}
+		
+		
+		
+		
+		
+	}
+	
+}
+
+  
 
 }
 else {

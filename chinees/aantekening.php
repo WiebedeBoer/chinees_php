@@ -23,6 +23,21 @@ if (isset($_GET["id"]) && isset($_GET["type"])){
 	if (filter_var($_GET["id"], FILTER_VALIDATE_INT)){
 	$num = $_GET["id"];
 	$type = $_GET["type"];
+	
+	if($type =="chineeskruid"){
+		echo '<p><a href="chinesekruiden.php?id='.$num.'">terug</a></p>';}
+	elseif ($type =="westerskruid"){
+		echo '<p><a href="kruiden.php?id='.$num.'">terug</a></p>';}
+	elseif ($type =="westersformule"){
+		echo '<p><a href="kruidenformules.php?id='.$num.'">terug</a></p>';}
+	elseif ($type =="patentformule"){
+		echo '<p><a href="patentformules.php?id='.$num.'">terug</a></p>';}
+	elseif ($type =="syndroom"){
+		echo '<p><a href="syndroomacties.php?id='.$num.'">terug</a></p>';}
+	
+	
+	
+	
 //update
 if(isset($_POST["update"])) {
 	$new_in = $_POST["update"];
@@ -40,7 +55,7 @@ if(isset($_POST["update"])) {
     $iid->bind_param('si', $new_in, $num);
     $iid->execute();
     $iid->close();
-	echo '<p><a href="hoofdmenu.php">aagepast</a></p>';
+	echo '<p><a href="aantekening.php?id='.$num.'&type='.$type.'">aagepast</a></p>';
 }
 //insert
 elseif (isset($_POST["insert"])) {
@@ -57,7 +72,7 @@ elseif (isset($_POST["insert"])) {
 		$iquery = "INSERT INTO Actiesaantekeningen (Actie, Aantekening, User) VALUES(?, ?, ?)";}
     $iid = $conn->prepare($iquery);
     $iid->bind_param('isi', $num, $new_in, $userid);
-    $iid->execute();
+    $iid->execute();	
     $iid->close();
 	echo '<p><a href="aantekening.php?id='.$num.'&type='.$type.'">ingevoerd</a></p>';
 }
@@ -75,7 +90,7 @@ else {
 	
 	//updating display
 	if ($usertype =="admin"){
-			if($type =="chineeskruid"){
+	if($type =="chineeskruid"){
 		$cwquery = "SELECT COUNT(Aantekening) AS counting FROM Chineesaantekeningen WHERE Kruid ='$num'";}
 	elseif ($type =="westerskruid"){
 		$cwquery = "SELECT COUNT(Aantekening) AS counting FROM Kruidenaantekeningen WHERE Kruid ='$num'";}
@@ -89,7 +104,7 @@ else {
 		$cwquery = "SELECT COUNT(Aantekening) AS counting FROM Kruidenaantekeningen WHERE Kruid ='$num'";}
 	}
 	else {
-			if($type =="chineeskruid"){
+	if($type =="chineeskruid"){
 		$cwquery = "SELECT COUNT(Aantekening) AS counting FROM Chineesaantekeningen WHERE Kruid ='$num' AND User ='$userid'";}
 	elseif ($type =="westerskruid"){
 		$cwquery = "SELECT COUNT(Aantekening) AS counting FROM Kruidenaantekeningen WHERE Kruid ='$num' AND User ='$userid'";}
@@ -105,16 +120,23 @@ else {
 	
 	
 
-	$cwresult = mysqli_query($conn, $cwquery);
-    $cw = mysqli_fetch_assoc($cwresult);
+	//$cwresult = mysqli_query($conn, $cwquery);
+    //$cw = mysqli_fetch_assoc($cwresult);
 	
-	echo $cw;
+		$wcfid = $conn->prepare($cwquery);
+	//$wcfid->bind_param('i', $num);
+	$wcfid->execute();
+	$wcfid->bind_result($cw);	
+	$wcfid->fetch();
+	$wcfid->close();
+	
+	//echo $cw;
 	
 	if ($cw >=1){
 		echo '<h2>Wijzigen</h2>';
 		
 	if ($usertype =="admin"){
-			if($type =="chineeskruid"){
+	if($type =="chineeskruid"){
 		$wquery = "SELECT Aantekening FROM Chineesaantekeningen WHERE Kruid ='$num'";}
 	elseif ($type =="westerskruid"){
 		$wquery = "SELECT Aantekening FROM Kruidenaantekeningen WHERE Kruid ='$num'";}
@@ -123,12 +145,12 @@ else {
 	elseif ($type =="patentformule"){
 		$wquery = "SELECT Aantekening FROM Patentaantekeningen WHERE Patent ='$num'";}
 	elseif ($type =="syndroom"){
-		$wquery = "SELECT Aantekening FROM Actiesaantekeningen WHERE Patent ='$num'";}
+		$wquery = "SELECT Aantekening FROM Actiesaantekeningen WHERE Actie ='$num'";}
 	else {
 		$wquery = "SELECT Aantekening FROM Kruidenaantekeningen WHERE Kruid ='$num'";}
 	}
 	else {
-			if($type =="chineeskruid"){
+	if($type =="chineeskruid"){
 		$wquery = "SELECT Aantekening FROM Chineesaantekeningen WHERE Kruid ='$num' AND User ='$userid'";}
 	elseif ($type =="westerskruid"){
 		$wquery = "SELECT Aantekening FROM Kruidenaantekeningen WHERE Kruid ='$num' AND User ='$userid'";}
@@ -137,7 +159,7 @@ else {
 	elseif ($type =="patentformule"){
 		$wquery = "SELECT Aantekening FROM Patentaantekeningen WHERE Patent ='$num' AND User ='$userid'";}
 	elseif ($type =="syndroom"){
-		$wquery = "SELECT Aantekening FROM Actiesaantekeningen WHERE Patent ='$num' AND User ='$userid'";}
+		$wquery = "SELECT Aantekening FROM Actiesaantekeningen WHERE Actie ='$num' AND User ='$userid'";}
 	else {
 		$wquery = "SELECT Aantekening FROM Kruidenaantekeningen WHERE Kruid ='$num' AND User ='$userid'";}
 	}	

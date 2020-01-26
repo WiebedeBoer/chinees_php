@@ -68,7 +68,18 @@ else {
 else {
 //insert
 if(isset($_POST["engels"]) && isset($_POST["latijn"]) && isset($_POST["pinjin"]) && isset($_POST["klasse"]) && isset($_POST["thermodynamisch"]) && isset($_POST["meridiaan"]) && isset($_POST["qi"]) && isset($_POST["werking"]) && isset($_POST["indicaties"]) && isset($_POST["dosering"])) {
-	    $iquery = "INSERT INTO ChineseKruiden (Engels, Latijn, Pinjin, Klasse, Thermodynamisch, Meridiaan, Qi, Werking, Indicaties, Dosering) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	    	$new_engels = $_POST["engels"];
+	$new_latijn = $_POST["latijn"];
+	$new_pinjin = $_POST["pinjin"];
+	$new_klasse = $_POST["klasse"];
+	$new_thermodynamisch = $_POST["thermodynamisch"];
+	$new_meridiaan = $_POST["meridiaan"];
+	$new_qi = $_POST["qi"];
+	$new_werking = $_POST["werking"];
+	$new_indicaties = $_POST["indicaties"];
+	$new_dosering = $_POST["dosering"];
+		
+		$iquery = "INSERT INTO ChineseKruiden (Engels, Latijn, Pinjin, Klasse, Thermodynamisch, Meridiaan, Qi, Werking, Indicaties, Dosering) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $iid = $conn->prepare($iquery);
         $iid->bind_param('ssssssssss', $new_engels, $new_latijn, $new_pinjin, $new_klasse, $new_thermodynamisch, $new_meridiaan, $new_qi, $new_werking, $new_indicaties, $new_dosering);
         $iid->execute();

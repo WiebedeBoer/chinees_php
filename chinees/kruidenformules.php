@@ -14,7 +14,7 @@ if ($connected ==1){
 	
 	echo '<p><a href="hoofdmenu.php">hoofdmenu</a></p>';
 if (isset($_GET["id"])){
-	/*
+	
 	if (filter_var($_GET["id"], FILTER_VALIDATE_INT)){
 	$num = $_GET["id"];
 //update
@@ -38,7 +38,7 @@ if (isset($_POST["naam"]) && isset($_POST["indicaties"]) && isset($_POST["werkin
 	
 		echo '<p><a href="kruidenformules.php?id='.$num.'">aangepast</a></p>';
 }
-elseif($_POST["select"]) && isset($_POST["verhouding"])){
+elseif(isset($_POST["select"]) && isset($_POST["verhouding"])){
 	$new_select = $_POST["select"];
 	$new_verhouding = $_POST["verhouding"];
 	
@@ -51,7 +51,7 @@ elseif($_POST["select"]) && isset($_POST["verhouding"])){
 echo '<p><a href="kruidenformules.php?id='.$num.'">verhouding ingevoerd</a></p>';
 	
 }
-elseif($_POST["del"])){
+elseif(isset($_POST["del"])){
 	$new_del = $_POST["del"];
 
 	
@@ -75,6 +75,8 @@ else {
 	$wid->fetch();
 	$wid->close();
 	
+	echo '<h2>Aanpassen</h2>';
+	
 	echo '<form method="POST" action="kruidenformules.php?id='.$num.'"><div class="invul">
 <div class="inl">Naam: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="2" name="naam">'.$new_naam.'</TEXTAREA></WRAP></div>
 <div class="inl">Indicaties: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="20" name="indicaties">'.$new_indicaties.'</TEXTAREA></WRAP></div>
@@ -94,12 +96,19 @@ echo '</div></form>';
 	$wcfid->bind_param('i', $num);
 	$wcfid->execute();
 	$wcfid->bind_result($idcf);	
+	$wcfid->fetch();
+	$wcfid->close();
 	if ($idcf >=1){
-	echo '<select name="select">';
-	$wfquery = "SELECT ID, Verhouding FROM FormulesEnKruiden WHERE Kruidenformule =?";	
-	$wfid = $conn->prepare($wfquery);
-	$wfid->execute();
-	while ($rownw = $wfid->fetch())
+		echo '<h2>verhoudingen</h2>';
+		echo '<form method="post" action="kruidenformules.php?id='.$num.'">';
+	//echo '<select name="select">';
+	//$wfquery = "SELECT ID, Verhouding FROM FormulesEnKruiden WHERE Kruidenformule =?";	
+	//$wfid = $conn->prepare($wfquery);
+	//$wfid->execute();
+	//while ($rownw = $wfid->fetch())
+	$syquery = "SELECT ID, Verhouding FROM FormulesEnKruiden WHERE Kruidenformule ='$num'";	
+	$syresult = mysqli_query($conn, $syquery);
+    while($rownwf = mysqli_fetch_assoc($syresult))
 	{
 		echo '<form method="post" action="kruidenformules.php?id='.$num.'">';
 		$zfnum = $rownwf["id"];
@@ -110,22 +119,28 @@ echo '</div></form>';
 		echo '</form>';
 	}
 	echo '<br> Verhouding: <input type="text" name="verhouding">';
+	echo '</form>';
 	}	
-	
-	
+		
 	//verhouding invoeren
-	$wcoquery = "SELECT COUNT(ID) AS idc FROM Kruiden";	
+	$wcoquery = "SELECT COUNT(ID) AS idco FROM Kruiden";	
 	$wcoid = $conn->prepare($wcoquery);
 	$wcoid->execute();
 	$wcoid->bind_result($idc);
+	$wcoid->fetch();
+	$wcoid->close();	
 	
 	if ($idc >=1){
-echo '<form method="post" action="kruidenformules.php?id='.$num.'">';
+	echo '<h2>verhoudingen invoeren</h2>';
+	echo '<form method="post" action="kruidenformules.php?id='.$num.'">';
 	echo '<select name="select">';
-	$wquery = "SELECT ID, Nederlands FROM Kruiden";	
-	$wid = $conn->prepare($wquery);
-	$wid->execute();
-	while ($rownw = $wid->fetch())
+	//$wquery = "SELECT ID, Nederlands FROM Kruiden";	
+	//$wid = $conn->prepare($wquery);
+	//$wid->execute();
+	//while ($rownw = $wid->fetch())
+	$syfquery = "SELECT ID, Nederlands FROM Kruiden";	
+	$syfresult = mysqli_query($conn, $syfquery);
+    while($rownw = mysqli_fetch_assoc($syfresult))
 	{
 		$znum = $rownw["id"];
 		$znederlands = $rownw["Nederlands"];
@@ -136,11 +151,14 @@ echo '<form method="post" action="kruidenformules.php?id='.$num.'">';
 	echo '<input type="submit" value="verhouding invoeren" name="but" class="but">';
 	echo '</form>';
 	}
+	else {
+		echo '<h2>verhoudingen invoeren</h2>';
+	}
 	
 	
 }
 	}	
-*/	
+	
 }
 else {
 //insert
@@ -159,6 +177,12 @@ if (isset($_POST["naam"]) && isset($_POST["indicaties"]) && isset($_POST["werkin
         $iid->bind_param('ssssssss', $new_naam, $new_indicaties, $new_werking, $new_klasse, $new_smaak, $new_meridiaan, $new_qi, $new_contraindicaties);
         $iid->execute();
         $iid->close();
+		
+					$mwquery = "SELECT MAX(ID) AS Maxid FROM Kruidenformules";
+	$result_wpg = $conn->query($mwquery);
+	$rowwpg = $result_wpg->fetch_assoc();
+	$maxid = $rowwpg['Maxid'];
+		
 		
 	echo '<p><a href="kruidenformules.php?id='.$maxid.'">ingevoerd</a></p>';
 		

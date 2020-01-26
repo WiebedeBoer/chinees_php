@@ -86,6 +86,8 @@ else {
 	
 	
 		echo '<p><b><a href="aantekening.php?id='.$num.'&type=patentformule">Aantekeningen</a></b></p>';
+		
+		echo '<h2>aanpassingen</h2>';
 	
 	echo '<form method="POST" action="patentformules.php?id='.$num.'"><div class="invul">
 	<div class="inl">Nederlands: </div><div class="inv"><WRAP><TEXTAREA cols="78" rows="2" name="nederlands">'.$nederlands.'</TEXTAREA></WRAP></div>
@@ -109,12 +111,20 @@ echo '<div class="sbm"><input type="submit" value="update" name="but" class="but
 	$wcfid->bind_param('i', $num);
 	$wcfid->execute();
 	$wcfid->bind_result($idcf);	
+	$wcfid->fetch();
+	$wcfid->close();
 	if ($idcf >=1){
-	echo '<select name="select">';
-	$wfquery = "SELECT ID, Verhouding FROM PatentEnKruiden WHERE Patentformule =?";	
-	$wfid = $conn->prepare($wfquery);
-	$wfid->execute();
-	while ($rownw = $wfid->fetch())
+		
+		echo '<h2>verhoudingen</h2>';
+		echo '<form method="post" action="kruidenformules.php?id='.$num.'">';
+	//echo '<select name="select">';
+	//$wfquery = "SELECT ID, Verhouding FROM PatentEnKruiden WHERE Patentformule =?";	
+	//$wfid = $conn->prepare($wfquery);
+	//$wfid->execute();
+	//while ($rownw = $wfid->fetch())
+	$syquery = "SELECT ID, Verhouding FROM PatentEnKruiden WHERE Patentformule ='$num'";	
+	$syresult = mysqli_query($conn, $syquery);
+    while($rownwf = mysqli_fetch_assoc($syresult))
 	{
 		echo '<form method="post" action="kruidenformules.php?id='.$num.'">';
 		$zfnum = $rownwf["id"];
@@ -125,6 +135,8 @@ echo '<div class="sbm"><input type="submit" value="update" name="but" class="but
 		echo '</form>';
 	}
 	echo '<br> Verhouding: <input type="text" name="verhouding">';
+	echo '</form>';
+	
 	}	
 	
 	//verhoudingen invoeren
@@ -132,14 +144,21 @@ echo '<div class="sbm"><input type="submit" value="update" name="but" class="but
 	$wcoid = $conn->prepare($wcoquery);
 	$wcoid->execute();
 	$wcoid->bind_result($idc);
+	$wcoid->fetch();
+	$wcoid->close();
 	
 	if ($idc >=1){
+		
+		echo '<h2>verhoudingen invoeren</h2>';
 echo '<form method="post" action="patentformules.php?id='.$num.'">';
 	echo '<select name="select">';
-	$wquery = "SELECT ID, Engels FROM ChineseKruiden";	
-	$wid = $conn->prepare($wquery);
-	$wid->execute();
-	while ($rownw = $wid->fetch())
+	//$wquery = "SELECT ID, Engels FROM ChineseKruiden";	
+	//$wid = $conn->prepare($wquery);
+	//$wid->execute();
+	//while ($rownw = $wid->fetch())
+	$syfquery = "SELECT ID, Engels FROM ChineseKruiden";	
+	$syfresult = mysqli_query($conn, $syfquery);
+    while($rownw = mysqli_fetch_assoc($syfresult))
 	{
 		$znum = $rownw["id"];
 		$zengels = $rownw["Engels"];
@@ -149,6 +168,10 @@ echo '<form method="post" action="patentformules.php?id='.$num.'">';
 	echo '<br> Verhouding: <input type="text" name="verhouding">';
 	echo '<input type="submit" value="verhouding invoeren" name="but" class="but">';
 	echo '</form>';
+	
+	}
+	else {
+		echo '<h2>verhoudingen invoeren</h2>';
 	}
 	
 

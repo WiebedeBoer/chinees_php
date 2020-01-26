@@ -35,16 +35,26 @@ if(isset($_POST["syndroom"]) && isset($_POST["symptoom"]) && isset($_POST["hoofd
 		echo '<p><a href="syndromen.php?id='.$num.'">gewijzigd</a></p>';
 		
 }
-elseif (isset($_POST["westers"]) && isset($_POST["oosters"])){
+elseif (isset($_POST["westers"]) && isset($_POST["oosters"]) && isset($_POST["aantekening"])){
 	$new_west = $_POST["westers"];
 	$new_oost = $_POST["oosters"];
+	$new_in = $_POST["aantekening"];
+	
 	if ($usertype =="admin"){
-		$iquery = "INSERT INTO Syndromen (Syndroom, Patentformule, Kruidformule) VALUES (?, ?, ?)";
+		$iquery = "INSERT INTO Actieformules (Syndroom, Patentformule, Kruidenformule) VALUES (?, ?, ?)";
         $iid = $conn->prepare($iquery);
         $iid->bind_param('iii', $num, $new_oost, $new_west);
         $iid->execute();
         $iid->close();
+		
+		$iaquery = "INSERT INTO Actiesaantekeningen (Actie, Aantekening, User) VALUES(?, ?, ?)";
+    $iaid = $conn->prepare($iaquery);
+    $iaid->bind_param('isi', $num, $new_in, $userid);
+    $iaid->execute();
+    $iaid->close();
+	
 	}
+	
 	echo '<p><a href="syndromen.php?id='.$num.'">actie formule ingevoerd</a></p>';
 	
 	
@@ -59,7 +69,7 @@ elseif(isset($_POST["del"])){
         $iid->execute();
         $iid->close();
 	}
-	echo '<p><a href="kruidenformules.php?id='.$num.'">actie formule verwijderd</a></p>';
+	echo '<p><a href="syndromen.php?id='.$num.'">actie formule verwijderd</a></p>';
 	
 	
 }
@@ -86,45 +96,53 @@ else {
 	<div class="inp"><input type="submit" value="update" name="but" class="but"></div>
 	</div></form>';
 	
+	/*
 	//actieformules invoeren
 	$wcoquery = "SELECT COUNT(ID) AS idc FROM Kruidenformules";	
 	$wcoid = $conn->prepare($wcoquery);
 	$wcoid->execute();
 	$wcoid->bind_result($idc);
+	$wcoid->fetch();
+	$wcoid->close();
 	
 	if ($idc >=1){
 echo '<form method="post" action="syndromen.php?id='.$num.'">';
 //westers
 	echo '<select name="westers">';
 	$wquery = "SELECT ID, Naam FROM Kruidenformules";	
-	$wid = $conn->prepare($wquery);
-	$wid->execute();
-	while ($rownw = $wid->fetch())
+	//$wid = $conn->prepare($wquery);
+	//$wid->execute();
+	//while ($rownw = $wid->fetch())
+	$wresult = mysqli_query($conn, $wquery);
+    while($rownw = mysqli_fetch_assoc($wresult))
 	{
 		$znum = $rownw["id"];
 		$znaam = $rownw["Naam"];
 		echo '<option value="'.$znum.'">'.$znaam.'</option>';
 	}
 	echo '</select>';
-	$wid->close();
+	//$wid->close();
 //oosters
 	echo '<select name="oosters">';
 	$wkquery = "SELECT ID, Nederlands FROM Patentformules";	
-	$wkid = $conn->prepare($wkquery);
-	$wkid->execute();
-	while ($rownwk = $wkid->fetch())
+	//$wkid = $conn->prepare($wkquery);
+	//$wkid->execute();
+	//while ($rownwk = $wkid->fetch())
+	$wkresult = mysqli_query($conn, $wkquery);
+    while($rownwk = mysqli_fetch_assoc($wkresult))
 	{
 		$onum = $rownwk["id"];
 		$onederlands = $rownwk["Naam"];
 		echo '<option value="'.$onum.'">'.$onederlands.'</option>';
 	}
 	echo '</select>';
-	$wkid->close();
+	//$wkid->close();
 //button
 if ($usertype =="admin"){
 echo '<input type="submit" value="actie invoeren" name="but" class="but">';}
 	echo '</form>';
 	}
+	*/
 	
 	//actieformules display
 	$wcfquery = "SELECT COUNT(ID) AS idc FROM Actieformules WHERE Syndroom =?";	
@@ -132,25 +150,106 @@ echo '<input type="submit" value="actie invoeren" name="but" class="but">';}
 	$wcfid->bind_param('i', $num);
 	$wcfid->execute();
 	$wcfid->bind_result($idcf);	
+	$wcfid->fetch();
+	$wcfid->close();
 	if ($idcf >=1){
-	echo '<select name="select">';
-	$wfquery = "SELECT ID, Patentformules.Nederlands AS patent, Kruidenformules.Nederlands AS kruid FROM Actieformules WHERE Kruidenformules.ID = Actieformules.Kruidenformule AND Patentformules.ID = Actieformules.Patentformule AND Actieformules.Syndroom =?";	
-	$wfid = $conn->prepare($wfquery);
-	$wfid->execute();
-	while ($rownw = $wfid->fetch())
+		echo '<h2>Actie formules</h2>';
+	//echo 'Actie formule: <select name="select">';
+	//$wfquery = "SELECT Actieformules.ID AS ID, Patentformules.Nederlands AS patent, Kruidenformules.Nederlands AS kruid FROM Actieformules JOIN Patentformules, Kruidenformules WHERE Kruidenformules.ID = Actieformules.Kruidenformule AND Patentformules.ID = Actieformules.Patentformule AND Actieformules.Syndroom ='$num'";	
+	//$wfid = $conn->prepare($wfquery);
+	//$wfid->execute();
+	//while ($rownw = $wfid->fetch())
+		$wfquery = "SELECT ID, Patentformule, Kruidenformule FROM Actieformules WHERE Syndroom ='$num'";	
+	
+	$syfresult = mysqli_query($conn, $wfquery);
+    while($rownwf = mysqli_fetch_assoc($syfresult))
 	{
 		echo '<form method="post" action="syndromen.php?id='.$num.'">';
 		$zfnum = $rownwf["ID"];
-		$zfpatent = $rownwf["patent"];
-		$zfkruid = $rownwf["kruid"];
-		echo $zfpatent.' '. $zfkruid.' <b><a href="aantekening.php?id='.$num.'&type=syndroom">Aantekeningen</a></b>';
+		$zfpatent = $rownwf["Patentformule"];
+		$zfkruid = $rownwf["Kruidenformule"];
+		
+		$wjquery = "SELECT Nederlands FROM Patentformules WHERE ID =?";	
+		$jid = $conn->prepare($wjquery);
+		$jid->bind_param('i', $zfpatent);
+		$jid->execute();
+		$jid->bind_result($jpatent);	
+		$jid->fetch();
+		$jid->close();
+		
+		$wcjquery = "SELECT Naam FROM Kruidenformules WHERE ID =?";	
+		$jwid = $conn->prepare($wcjquery);
+		$jwid->bind_param('i', $zfkruid);
+		$jwid->execute();
+		$jwid->bind_result($jkruid);	
+		$jwid->fetch();
+		$jwid->close();
+		
+		echo $jpatent.' '. $jkruid.' <b><a href="aantekening.php?id='.$num.'&type=syndroom">Aantekeningen</a></b>';
 		echo '<input type="hidden" value="'.$zfnum.'" name="del"><br>';
 		if ($usertype =="admin"){
-		echo '<input type="submit" value="verhouding verwijderen" name="but">';}
+		echo '<input type="submit" value="actie verwijderen" name="but">';}
 		echo '</form><br><br>';
 	}
-	echo '<br> Verhouding: <input type="text" name="verhouding">';
+	//echo '<br> Verhouding: <input type="text" name="verhouding">';
 	}	
+	
+	
+	//actieformules
+	$wcoquery = "SELECT COUNT(ID) AS idc FROM Kruidenformules";	
+	$wcoid = $conn->prepare($wcoquery);
+	$wcoid->execute();
+	$wcoid->bind_result($idc);
+		$wcoid->fetch();
+	$wcoid->close();
+	
+	$wpcoquery = "SELECT COUNT(ID) AS idcp FROM Patentformules";	
+	$wpcoid = $conn->prepare($wpcoquery);
+	$wpcoid->execute();
+	$wpcoid->bind_result($idcp);
+		$wpcoid->fetch();
+	$wpcoid->close();
+	
+	if ($idc >=1 && $idcp >=1){
+		echo '<h2>Actie formule invoeren</h2>';
+echo '<form method="post" action="syndromen.php?id='.$num.'">';
+	echo 'Westerse formule: <select name="westers">';
+	$wquery = "SELECT ID, Naam FROM Kruidenformules";	
+	//$wid = $conn->prepare($wquery);
+	//$wid->execute();
+	//while ($rownw = $wid->fetch())
+	$wresult = mysqli_query($conn, $wquery);
+    while($rownw = mysqli_fetch_assoc($wresult))
+	{
+		$znum = $rownw["ID"];
+		$znaam = $rownw["Naam"];
+		echo '<option value="'.$znum.'">'.$znaam.'</option>';
+	}
+	echo '</select>';
+	
+	echo ' Chinese formules: <select name="oosters">';
+	$wpquery = "SELECT ID, Nederlands FROM Patentformules";	
+	//$wpid = $conn->prepare($wpquery);
+	//$wpid->execute();
+	//while ($rownwp = $wpid->fetch())
+	$wpresult = mysqli_query($conn, $wpquery);
+    while($rownwp = mysqli_fetch_assoc($wpresult))
+	{
+		$zpnum = $rownwp["ID"];
+		$zpnederlands = $rownwp["Nederlands"];
+		echo '<option value="'.$zpnum.'">'.$zpnederlands.'</option>';
+	}
+	echo '</select>';
+	
+	
+	echo '<br> Aantekening: <input type="text" name="aantekening">';
+	echo '<input type="submit" value="actie formule invoeren" name="but">';
+	echo '</form>';
+	}
+
+	
+	
+	
 	
 	
 }
@@ -198,48 +297,6 @@ else {
 </div>
 </form>';
 
-//actieformules
-	$wcoquery = "SELECT COUNT(ID) AS idc FROM Kruidenformules";	
-	$wcoid = $conn->prepare($wcoquery);
-	$wcoid->execute();
-	$wcoid->bind_result($idc);
-	
-	$wpcoquery = "SELECT COUNT(ID) AS idcp FROM Patentformules";	
-	$wpcoid = $conn->prepare($wpcoquery);
-	$wpcoid->execute();
-	$wpcoid->bind_result($idcp);
-	
-	if ($idc >=1 && $idcp >=1){
-echo '<form method="post" action="syndromen.php">';
-	echo 'Select name="formule">';
-	$wquery = "SELECT ID, Naam FROM Kruidenformules";	
-	$wid = $conn->prepare($wquery);
-	$wid->execute();
-	while ($rownw = $wid->fetch())
-	{
-		$znum = $rownw["ID"];
-		$znederlands = $rownw["Naam"];
-		echo '<option value="'.$znum.'">'.$znederlands.'</option>';
-	}
-	echo '</select>';
-	
-	echo '<select name="patent">';
-	$wpquery = "SELECT ID, Nederlands FROM Patentformules";	
-	$wpid = $conn->prepare($wpquery);
-	$wpid->execute();
-	while ($rownwp = $wpid->fetch())
-	{
-		$zpnum = $rownwp["ID"];
-		$zpnederlands = $rownwp["Nederlands"];
-		echo '<option value="'.$zpnum.'">'.$zpnederlands.'</option>';
-	}
-	echo '</select>';
-	
-	
-	echo '<br> Aantekening: <input type="text" name="aantekening">';
-	echo '<input type="submit" value="verhouding invoeren" name="but">';
-	echo '</form>';
-	}
 
 
 }		

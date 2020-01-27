@@ -1,5 +1,5 @@
 <?php
-echo '<p>* voor joker</p>';
+echo '<p>* voor alles</p>';
 echo '<div class="mn"><form method="post" action="overzicht.php"><input type="text" name="zoekterm"><select name="soort">
 <option value="nederlands">Nederlandse naam kruid</option>
 <option value="latijn">Latijnse naam kruid</option>

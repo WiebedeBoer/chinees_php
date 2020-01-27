@@ -27,13 +27,13 @@ if (isset($_GET["id"]) && isset($_GET["type"])){
 	if($type =="chineeskruid"){
 		echo '<p><a href="chinesekruiden.php?id='.$num.'">terug</a></p>';}
 	elseif ($type =="westerskruid"){
-		echo '<p><a href="kruiden.php?id='.$num.'">terug</a></p>';}
+		echo '<p><a href="westersekruiden.php?id='.$num.'">terug</a></p>';}
 	elseif ($type =="westersformule"){
 		echo '<p><a href="kruidenformules.php?id='.$num.'">terug</a></p>';}
 	elseif ($type =="patentformule"){
 		echo '<p><a href="patentformules.php?id='.$num.'">terug</a></p>';}
 	elseif ($type =="syndroom"){
-		echo '<p><a href="syndroomacties.php?id='.$num.'">terug</a></p>';}
+		echo '<p><a href="syndromen.php?id='.$num.'">terug</a></p>';}
 	
 	
 	

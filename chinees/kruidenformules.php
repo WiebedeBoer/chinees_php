@@ -17,6 +17,9 @@ if (isset($_GET["id"])){
 	
 	if (filter_var($_GET["id"], FILTER_VALIDATE_INT)){
 	$num = $_GET["id"];
+	
+	echo '<p><a href="aantekening.php?id='.$num.'&type=westersformule">aantekening</a></p>';
+	
 //update
 if (isset($_POST["naam"]) && isset($_POST["indicaties"]) && isset($_POST["werking"]) && isset($_POST["klasse"]) && isset($_POST["smaak"]) && isset($_POST["meridiaan"]) && isset($_POST["qi"]) && isset($_POST["contraindicaties"])) {
 	

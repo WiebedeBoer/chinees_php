@@ -16,6 +16,9 @@ if ($connected ==1){
 if (isset($_GET["id"])){
 	if (filter_var($_GET["id"], FILTER_VALIDATE_INT)){
 	$num = $_GET["id"];
+	
+	echo '<p><a href="aantekening.php?id='.$num.'&type=chineeskruid">aantekening</a></p>';
+	
 //update
 if(isset($_POST["engels"]) && isset($_POST["latijn"]) && isset($_POST["pinjin"]) && isset($_POST["klasse"]) && isset($_POST["thermodynamisch"]) && isset($_POST["meridiaan"]) && isset($_POST["qi"]) && isset($_POST["werking"]) && isset($_POST["indicaties"]) && isset($_POST["dosering"])) {
 	$new_engels = $_POST["engels"];

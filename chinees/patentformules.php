@@ -18,6 +18,10 @@ if (isset($_GET["id"])){
 	
 	if (filter_var($_GET["id"], FILTER_VALIDATE_INT)){
 	$num = $_GET["id"];
+	
+	echo '<p><a href="aantekening.php?id='.$num.'&type=patentformule">aantekening</a></p>';
+	
+	
 //update
 if(isset($_POST["nederlands"]) && isset($_POST["engels"]) && isset($_POST["pinjin"]) && isset($_POST["werking"]) && isset($_POST["tong"]) && isset($_POST["pols"]) && isset($_POST["contraindicaties"]) && isset($_POST["indicaties"])) {
 	
@@ -85,7 +89,7 @@ else {
 	$wid->close();
 	
 	
-		echo '<p><b><a href="aantekening.php?id='.$num.'&type=patentformule">Aantekeningen</a></b></p>';
+		//echo '<p><b><a href="aantekening.php?id='.$num.'&type=patentformule">Aantekeningen</a></b></p>';
 		
 		echo '<h2>aanpassingen</h2>';
 	

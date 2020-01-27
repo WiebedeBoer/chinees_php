@@ -41,7 +41,7 @@ elseif (isset($_POST["westers"]) && isset($_POST["oosters"]) && isset($_POST["aa
 	$new_in = $_POST["aantekening"];
 	
 	if ($usertype =="admin"){
-		$iquery = "INSERT INTO Actieformules (Syndroom, Patentformule, Kruidenformule) VALUES (?, ?, ?)";
+		$iquery = "INSERT INTO Actieformule (Syndroom, Patentformule, Kruidenformule) VALUES (?, ?, ?)";
         $iid = $conn->prepare($iquery);
         $iid->bind_param('iii', $num, $new_oost, $new_west);
         $iid->execute();
@@ -63,7 +63,7 @@ elseif(isset($_POST["del"])){
 	$new_del = $_POST["del"];
 
 	if ($usertype =="admin"){
-		$iquery = "DELETE FROM Actieformules WHERE ID =?";
+		$iquery = "DELETE FROM Actieformule WHERE ID =?";
         $iid = $conn->prepare($iquery);
         $iid->bind_param('i', $new_del);
         $iid->execute();
@@ -145,7 +145,7 @@ echo '<input type="submit" value="actie invoeren" name="but" class="but">';}
 	*/
 	
 	//actieformules display
-	$wcfquery = "SELECT COUNT(ID) AS idc FROM Actieformules WHERE Syndroom =?";	
+	$wcfquery = "SELECT COUNT(ID) AS idc FROM Actieformule WHERE Syndroom =?";	
 	$wcfid = $conn->prepare($wcfquery);
 	$wcfid->bind_param('i', $num);
 	$wcfid->execute();
@@ -159,7 +159,7 @@ echo '<input type="submit" value="actie invoeren" name="but" class="but">';}
 	//$wfid = $conn->prepare($wfquery);
 	//$wfid->execute();
 	//while ($rownw = $wfid->fetch())
-		$wfquery = "SELECT ID, Patentformule, Kruidenformule FROM Actieformules WHERE Syndroom ='$num'";	
+		$wfquery = "SELECT ID, Patentformule, Kruidenformule FROM Actieformule WHERE Syndroom ='$num'";	
 	
 	$syfresult = mysqli_query($conn, $wfquery);
     while($rownwf = mysqli_fetch_assoc($syfresult))

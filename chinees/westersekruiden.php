@@ -16,6 +16,9 @@ if ($connected ==1){
 if (isset($_GET["id"])){
 	if (filter_var($_GET["id"], FILTER_VALIDATE_INT)){
 	$num = $_GET["id"];
+	
+	echo '<p><a href="aantekening.php?id='.$num.'&type=westerskruid">aantekening</a></p>';
+	
 //update
 if (isset($_POST["nederlands"]) && isset($_POST["latijn"]) && isset($_POST["familie"]) && isset($_POST["inhoudsstoffen"]) && isset($_POST["toepassingen"]) && isset($_POST["eigenschappen"]) && isset($_POST["actie"]) && isset($_POST["gebruik"]) && isset($_POST["contraindicaties"]) && isset($_POST["smaak"]) && isset($_POST["dosering"]) && isset($_POST["thermodynamisch"]) && isset($_POST["gebruiktedelen"]) && isset($_POST["orgaan"])) {
 	$new_nederlands = $_POST["nederlands"];
@@ -53,7 +56,7 @@ else {
 	$wid->fetch();
 	$wid->close();
 	
-	echo '<p><b><a href="aantekening.php?id='.$num.'&type=westerskruid">Aantekeningen</a></b></p>';
+	//echo '<p><b><a href="aantekening.php?id='.$num.'&type=westerskruid">Aantekeningen</a></b></p>';
 
 	echo '<form method="POST" action="westersekruiden.php">
 <div class="invul">

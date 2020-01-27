@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Gegenereerd op: 06 jan 2020 om 19:35
+-- Gegenereerd op: 27 jan 2020 om 11:58
 -- Serverversie: 5.5.64-MariaDB
 -- PHP-versie: 7.1.14
 
@@ -25,15 +25,22 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `Actieformules`
+-- Tabelstructuur voor tabel `Actieformule`
 --
 
-CREATE TABLE `Actieformules` (
+CREATE TABLE `Actieformule` (
   `ID` int(11) NOT NULL,
   `Syndroom` int(11) NOT NULL,
-  `Patentformule` int(11) DEFAULT NULL,
-  `Kruidenformule` int(11) DEFAULT NULL
+  `Patentformule` int(11) NOT NULL,
+  `Kruidenformule` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `Actieformule`
+--
+
+INSERT INTO `Actieformule` (`ID`, `Syndroom`, `Patentformule`, `Kruidenformule`) VALUES
+(0, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -47,6 +54,13 @@ CREATE TABLE `Actiesaantekeningen` (
   `Aantekening` text NOT NULL,
   `User` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `Actiesaantekeningen`
+--
+
+INSERT INTO `Actiesaantekeningen` (`ID`, `Actie`, `Aantekening`, `User`) VALUES
+(5, 1, 'test', 1);
 
 -- --------------------------------------------------------
 
@@ -81,6 +95,13 @@ CREATE TABLE `ChineseKruiden` (
   `Dosering` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Gegevens worden geëxporteerd voor tabel `ChineseKruiden`
+--
+
+INSERT INTO `ChineseKruiden` (`ID`, `Engels`, `Latijn`, `Pinjin`, `Klasse`, `Thermodynamisch`, `Meridiaan`, `Qi`, `Werking`, `Indicaties`, `Dosering`) VALUES
+(1, 'test', 't', 't', 't', 't', 't', 't', 't', 't', 't');
+
 -- --------------------------------------------------------
 
 --
@@ -94,6 +115,13 @@ CREATE TABLE `Formulesaantekeningen` (
   `User` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Gegevens worden geëxporteerd voor tabel `Formulesaantekeningen`
+--
+
+INSERT INTO `Formulesaantekeningen` (`ID`, `Kruid`, `Aantekening`, `User`) VALUES
+(1, 2, 'aantekening kruid', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -106,6 +134,13 @@ CREATE TABLE `FormulesEnKruiden` (
   `Kruiden` int(11) NOT NULL,
   `Verhouding` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `FormulesEnKruiden`
+--
+
+INSERT INTO `FormulesEnKruiden` (`ID`, `Kruidenformule`, `Kruiden`, `Verhouding`) VALUES
+(3, 1, 0, 2);
 
 -- --------------------------------------------------------
 
@@ -131,6 +166,19 @@ CREATE TABLE `Kruiden` (
   `Orgaan` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Gegevens worden geëxporteerd voor tabel `Kruiden`
+--
+
+INSERT INTO `Kruiden` (`ID`, `Nederlands`, `Latijn`, `Familie`, `Inhoudsstof`, `Toepassingen`, `Eigenschappen`, `Actie`, `Gebruik`, `Contraindicaties`, `Smaak`, `Dosering`, `Thermodynamisch`, `GebruikteDelen`, `Orgaan`) VALUES
+(1, 'lavendel', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'dose', 'test', 'test', 'test'),
+(2, 'rozemarijn', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n'),
+(3, 't', 't', 't', 't', 't', 't', 't', 't', 't', 't', 't', 't', 't', 't'),
+(4, 'Munt', 'Mentha piperium', 'Lipbloemenfamilie', 'ethrische olie', 'zenuwstelsel', 'aard is drogen', 'klaart wind koude', 'inwendig', 'voorzichtig zijn bij overmatig zweten', 'scherp', 'dose', 'eerst warm later koel', 'delen', 'long, milt, lever'),
+(5, 'Agrimonie', 'Agrimonia eupatoria', 'Rozenfamilie', 'Looistoffen, bitterstoffen, amara aroma', 'constitutie opbouwende en genezende', 'temperatuur is neutraal', 'Verwijdert long slijm', 'moedertinctuur', 'contra', 'zuur', 'zie gebruik', 'neutraal', 'delen', 'Long, dikke darm'),
+(6, 'Venkel', 'Foeniculum vulgare', 'Schermbloemige familie', 'Etherische olie, anathol, cineol, vette olie', 'spijsvertering, ontkrampend, stimulerend', 'aard is stimulerend', 'versterkt en harmoniserend', 'de oertinctuur', 'contra', 'beetje zuur en zoet', 'dose', 'warm', 'delen', 'Nier, blaas, milt'),
+(7, 'Duizendblad', 'Achilea Milefolium', 'Composietenfamilie', 'Bitterstoffen, looistoffen, organische zuren', 'Spijsvertering', 'temperatuur is variabel', 'tonifieert de milt', 'inwendig', 'Niet gebruiken tijdens zwangerschap (stimuleert de weeen en de uitdrijving)', 'bitter zoet scherp', 'dose', 'variabel', 'delen', 'Lever, nier, blaas, milt, hart, Chong mai en ren mai');
+
 -- --------------------------------------------------------
 
 --
@@ -143,6 +191,14 @@ CREATE TABLE `Kruidenaantekeningen` (
   `Aantekening` text NOT NULL,
   `User` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `Kruidenaantekeningen`
+--
+
+INSERT INTO `Kruidenaantekeningen` (`ID`, `Kruid`, `Aantekening`, `User`) VALUES
+(1, 1, 'test aan', 1),
+(2, 1, 'testing', 1);
 
 -- --------------------------------------------------------
 
@@ -161,6 +217,15 @@ CREATE TABLE `Kruidenformules` (
   `Qi` text,
   `Contraindicaties` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `Kruidenformules`
+--
+
+INSERT INTO `Kruidenformules` (`ID`, `Naam`, `Indicaties`, `Werking`, `Klasse`, `Smaak`, `Meridiaan`, `Qi`, `Contraindicaties`) VALUES
+(1, 'test', 'f', 'f', 'f', 'f', 'f', 'f', 'f'),
+(2, 'Li i Moving PM', 'Stagnatie van lever Qi', 'Tonifieert milt', 'klasse', 'smaak', 'meridiaan', 'qi', 'contra'),
+(3, 'Milt Qi digest thee', 'Milt Qi leegte. Opgeblazen gevoel.', 'Tonifieert Milt Qi, Milt Yang, helpt bij lever Qi stagnatie.', 'klasse', 'smaak', 'meridiaan', 'qi', 'contra');
 
 -- --------------------------------------------------------
 
@@ -206,6 +271,15 @@ CREATE TABLE `Patentformules` (
   `Indicaties` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Gegevens worden geëxporteerd voor tabel `Patentformules`
+--
+
+INSERT INTO `Patentformules` (`ID`, `Nederlands`, `Engels`, `Pinjin`, `Werking`, `Tong`, `Pols`, `Contraindicaties`, `Indicaties`) VALUES
+(1, 'test', 'g', 'g', 'g', 'g', 'g', 'g', 'g'),
+(2, 'Decoctie van Cinnamonium', 'Decoction of Cinnamonium', 'Ruo Fu Bao Yuan', 'yang tonifieren', 'tong', 'pols', 'contra', 'indicatie'),
+(3, 'Decoctie van Astragalus om het centrum te versterken', 'Decoction of Astragalus', 'Huang Qi Jian Zhong Tang', 'Maag Qi tonifieren en verwarmen, milt Qi tonifieren en verwarmen', 'tong', 'pols', 'contra', 'indicatie');
+
 -- --------------------------------------------------------
 
 --
@@ -225,6 +299,15 @@ CREATE TABLE `Syndromen` (
   `Ontwikkelingen` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Gegevens worden geëxporteerd voor tabel `Syndromen`
+--
+
+INSERT INTO `Syndromen` (`ID`, `Syndroom`, `Symptoom`, `Hoofdsymptoom`, `Tong`, `Pols`, `Etiologie`, `Pathologie`, `Voorlopers`, `Ontwikkelingen`) VALUES
+(1, 'test', 't', 't', 't', 'y', 'y', 'y', 'y', 'y'),
+(2, 'Hart Qi Leegte', 'symptoom', 'Palpitaties, vermoeidheid, lege pols', 'bleke of normale kleur', 'leeg', 'etiologie', 'pathologie', 'pathologie', 'pathologie'),
+(3, 'Hart Qi Leegte', 'symptoom', 'palpitaties, vermoeidheid,lege pols', 'bleke of normale tong', 'leeg', 'etiologie', 'pathologie', 'pathologie', 'pathologie');
+
 -- --------------------------------------------------------
 
 --
@@ -238,6 +321,32 @@ CREATE TABLE `Syndromenacties` (
   `Acupunctuurpunten` text,
   `Opmerkingen` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `Syndromenacties`
+--
+
+INSERT INTO `Syndromenacties` (`ID`, `Syndroom`, `Actie`, `Acupunctuurpunten`, `Opmerkingen`) VALUES
+(1, 1, 'test', 't', 'to');
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `Synoniemen`
+--
+
+CREATE TABLE `Synoniemen` (
+  `ID` int(11) NOT NULL,
+  `Naam` text NOT NULL,
+  `Synoniem` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `Synoniemen`
+--
+
+INSERT INTO `Synoniemen` (`ID`, `Naam`, `Synoniem`) VALUES
+(1, 'palpitatie', 'hartklopping');
 
 -- --------------------------------------------------------
 
@@ -258,17 +367,21 @@ CREATE TABLE `Users` (
 --
 
 INSERT INTO `Users` (`ID`, `Username`, `Password`, `Type`, `Cokey`) VALUES
-(1, 'test', 'fe01ce2a7fbac8fafaed7c982a04e229', 'user', 'nDKSjVfejgeM');
+(1, 'test', 'fe01ce2a7fbac8fafaed7c982a04e229', 'admin', 'jb5e6AmKgBLF'),
+(2, 'jscholte', 'fe01ce2a7fbac8fafaed7c982a04e229', 'admin', '4GCz04jsejcc');
 
 --
 -- Indexen voor geëxporteerde tabellen
 --
 
 --
--- Indexen voor tabel `Actieformules`
+-- Indexen voor tabel `Actieformule`
 --
-ALTER TABLE `Actieformules`
-  ADD PRIMARY KEY (`ID`);
+ALTER TABLE `Actieformule`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `Syndroom` (`Syndroom`),
+  ADD KEY `Patentformule` (`Patentformule`),
+  ADD KEY `Kruidenformule` (`Kruidenformule`);
 
 --
 -- Indexen voor tabel `Actiesaantekeningen`
@@ -349,6 +462,12 @@ ALTER TABLE `Syndromenacties`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indexen voor tabel `Synoniemen`
+--
+ALTER TABLE `Synoniemen`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indexen voor tabel `Users`
 --
 ALTER TABLE `Users`
@@ -359,16 +478,10 @@ ALTER TABLE `Users`
 --
 
 --
--- AUTO_INCREMENT voor een tabel `Actieformules`
---
-ALTER TABLE `Actieformules`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT voor een tabel `Actiesaantekeningen`
 --
 ALTER TABLE `Actiesaantekeningen`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT voor een tabel `Chineesaantekeningen`
@@ -380,37 +493,37 @@ ALTER TABLE `Chineesaantekeningen`
 -- AUTO_INCREMENT voor een tabel `ChineseKruiden`
 --
 ALTER TABLE `ChineseKruiden`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT voor een tabel `Formulesaantekeningen`
 --
 ALTER TABLE `Formulesaantekeningen`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT voor een tabel `FormulesEnKruiden`
 --
 ALTER TABLE `FormulesEnKruiden`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT voor een tabel `Kruiden`
 --
 ALTER TABLE `Kruiden`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT voor een tabel `Kruidenaantekeningen`
 --
 ALTER TABLE `Kruidenaantekeningen`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT voor een tabel `Kruidenformules`
 --
 ALTER TABLE `Kruidenformules`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT voor een tabel `Patentaantekeningen`
@@ -422,31 +535,69 @@ ALTER TABLE `Patentaantekeningen`
 -- AUTO_INCREMENT voor een tabel `PatentEnKruiden`
 --
 ALTER TABLE `PatentEnKruiden`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT voor een tabel `Patentformules`
 --
 ALTER TABLE `Patentformules`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT voor een tabel `Syndromen`
 --
 ALTER TABLE `Syndromen`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT voor een tabel `Syndromenacties`
 --
 ALTER TABLE `Syndromenacties`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT voor een tabel `Synoniemen`
+--
+ALTER TABLE `Synoniemen`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT voor een tabel `Users`
 --
 ALTER TABLE `Users`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Beperkingen voor geëxporteerde tabellen
+--
+
+--
+-- Beperkingen voor tabel `Actieformule`
+--
+ALTER TABLE `Actieformule`
+  ADD CONSTRAINT `Actieformule_ibfk_3` FOREIGN KEY (`Kruidenformule`) REFERENCES `Kruidenformules` (`ID`),
+  ADD CONSTRAINT `Actieformule_ibfk_1` FOREIGN KEY (`Syndroom`) REFERENCES `Syndromen` (`ID`),
+  ADD CONSTRAINT `Actieformule_ibfk_2` FOREIGN KEY (`Patentformule`) REFERENCES `Patentformules` (`ID`);
+
+--
+-- Beperkingen voor tabel `Actiesaantekeningen`
+--
+ALTER TABLE `Actiesaantekeningen`
+  ADD CONSTRAINT `Actiesaantekeningen_ibfk_1` FOREIGN KEY (`Actie`) REFERENCES `Actieformule` (`ID`);
+
+--
+-- Beperkingen voor tabel `FormulesEnKruiden`
+--
+ALTER TABLE `FormulesEnKruiden`
+  ADD CONSTRAINT `FormulesEnKruiden_ibfk_2` FOREIGN KEY (`Kruidenformule`) REFERENCES `Kruidenformules` (`ID`),
+  ADD CONSTRAINT `FormulesEnKruiden_ibfk_1` FOREIGN KEY (`Kruiden`) REFERENCES `Kruiden` (`ID`);
+
+--
+-- Beperkingen voor tabel `PatentEnKruiden`
+--
+ALTER TABLE `PatentEnKruiden`
+  ADD CONSTRAINT `PatentEnKruiden_ibfk_2` FOREIGN KEY (`Patentformule`) REFERENCES `Patentformules` (`ID`),
+  ADD CONSTRAINT `PatentEnKruiden_ibfk_1` FOREIGN KEY (`Chinesekruiden`) REFERENCES `ChineseKruiden` (`ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
